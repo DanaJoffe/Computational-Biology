@@ -5,6 +5,10 @@ from Creature import Creature
 from random import choices
 from random import sample
 
+SICK = '@'
+HEALTHY = '#'
+EMPTY = '_'
+
 
 def get_neighbors(automaton, row, col):
     if not automaton:
@@ -86,24 +90,30 @@ def init_creatures(automaton, numberOfCreatures):
     return creatures
 
 
-def printBoard(automaton, creatures):
-    print("\n\n*******************************************************\n\n")
-    for row in range(len(automaton)):
-        for col in range(len(automaton[0])):
+def get_board(automaton, creatures):
+    # init empty board
+    board = [["_" for _ in range(len(automaton[0]))] for _ in range(len(automaton))]
+    for row in range(len(board)):
+        for col in range(len(board[0])):
             if automaton[row][col].isOccupied:
                 for c in creatures:
                     if c.get_current_cell() == automaton[row][col]:
                         if c.isInfected:
-                            print("@", end=",")
+                            board[row][col] = SICK
                             break
                         else:
-                            print("#", end=",")
+                            board[row][col] = HEALTHY
                             break
-                else:
-                    print("&", end=",")
-
             else:
-                print("_", end=",")
+                board[row][col] = EMPTY
+    return board
+
+
+def printBoard(board):
+    print("\n\n*******************************************************\n\n")
+    for row in range(len(board)):
+        for col in range(len(board[0])):
+            print(board[row][col], end=",")
         print("")
     print("\n\n*******************************************************\n\n")
     time.sleep(1)
@@ -122,7 +132,7 @@ def start_simulation(automaton, creatures, probabilityToInfect):
             optionsToMove.append(creature.get_current_cell())
             creature.move(optionsToMove)
 
-        printBoard(automaton, creatures)
+        printBoard(get_board(automaton, creatures))
 
 
 if __name__ == '__main__':
