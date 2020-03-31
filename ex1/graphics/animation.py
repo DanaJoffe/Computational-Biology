@@ -4,20 +4,13 @@ import numpy as np
 import matplotlib.animation as animation
 from matplotlib import colors
 from graphics.AutomatonFrame import AutomatonFrame
-
-# cell states. the numbers aren't meaningful
-from configuration import SICK, HEALTHY, EMPTY
-NUMS = [EMPTY, HEALTHY, SICK]
-
-COLORS = {EMPTY: 'white',
-          HEALTHY: 'pink',
-          SICK: 'red'}
+from configuration import CELL_STATES, CELL_COLORS
 
 
 def create_cmap():
     # map colors
-    cols = [color for _, color in sorted(zip(NUMS, [COLORS[n] for n in NUMS]))]
-    nums = sorted(NUMS)
+    cols = [color for _, color in sorted(zip(CELL_STATES, [CELL_COLORS[n] for n in CELL_STATES]))]
+    nums = sorted(CELL_STATES)
     bound = nums + [nums[-1] + 1]
     stat = cols
 
