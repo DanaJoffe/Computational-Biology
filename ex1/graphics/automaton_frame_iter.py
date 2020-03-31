@@ -10,7 +10,7 @@ class AutomatonFrame(object):
         """
         self.game = game
 
-    def board(self):
+    def get_board(self):
         return self.game.get_board()
 
     def __iter__(self):

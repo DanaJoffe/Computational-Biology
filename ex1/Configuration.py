@@ -1,0 +1,3 @@
+EMPTY = 0
+HEALTHY = 4
+SICK = 23

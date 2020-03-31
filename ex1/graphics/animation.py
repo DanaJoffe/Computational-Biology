@@ -3,12 +3,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.animation as animation
 from matplotlib import colors
-from automaton_frame_iter import AutomatonFrame
+from graphics.automaton_frame_iter import AutomatonFrame
 
 # cell states. the numbers aren't meaningful
-EMPTY = 0
-HEALTHY = 4
-SICK = 23
+from Configuration import SICK, HEALTHY, EMPTY
 NUMS = [EMPTY, HEALTHY, SICK]
 
 COLORS = {EMPTY: 'white',
@@ -33,14 +31,14 @@ def start_animation(game):
     automaton_frame_iter = AutomatonFrame(game)
     fig, ax = plt.subplots()
     cmap, norm = create_cmap()
-    img = ax.matshow(automaton_frame_iter.board(), cmap=cmap, norm=norm)
+    img = ax.matshow(automaton_frame_iter.get_board(), cmap=cmap, norm=norm)
     # ax.axis('off')
 
     def init():
         return img,
 
     def animate(automaton_frame_iter):
-        img.set_data(automaton_frame_iter.board())
+        img.set_data(automaton_frame_iter.get_board())
         return img,
 
     ani = animation.FuncAnimation(fig, func=animate,  frames=automaton_frame_iter, interval=500, init_func=init)
