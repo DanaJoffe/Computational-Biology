@@ -5,7 +5,7 @@ from CellAutomatonGameBase import CellAutomatonGameBase
 from Creature import Creature
 from random import choices
 from random import sample
-from graphics.print_board import print_board, SICK, HEALTHY, EMPTY, start_animation
+from graphics.animation import print_board, SICK, HEALTHY, EMPTY, start_animation
 
 
 def get_neighbors(automaton, row, col):
