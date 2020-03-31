@@ -1,6 +1,6 @@
 import time
 from logic.CellAutomatonGameBase import CellAutomatonGameBase
-from Configuration import SICK, HEALTHY, EMPTY
+from configuration import SICK, HEALTHY, EMPTY
 
 
 class CellAutomatonGame(CellAutomatonGameBase):

@@ -1,6 +1,6 @@
 from graphics.animation import start_animation
-from logic.AutomatopnFactory import create_automaton
-from logic.CreaturesFactory import create_creatures
+from logic.automaton_factory import create_automaton
+from logic.creatures_factory import create_creatures
 from logic.CellAutomatonGame import CellAutomatonGame
 
 

@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.animation as animation
 from matplotlib import colors
-from graphics.automaton_frame_iter import AutomatonFrame
+from graphics.AutomatonFrame import AutomatonFrame
 
 # cell states. the numbers aren't meaningful
-from Configuration import SICK, HEALTHY, EMPTY
+from configuration import SICK, HEALTHY, EMPTY
 NUMS = [EMPTY, HEALTHY, SICK]
 
 COLORS = {EMPTY: 'white',
