@@ -1,13 +1,11 @@
 import time
 
 from Cell import Cell
+from CellAutomatonGameBase import CellAutomatonGameBase
 from Creature import Creature
 from random import choices
 from random import sample
-
-SICK = '@'
-HEALTHY = '#'
-EMPTY = '_'
+from graphics.print_board import print_board, SICK, HEALTHY, EMPTY, start_animation
 
 
 def get_neighbors(automaton, row, col):
@@ -119,20 +117,40 @@ def printBoard(board):
     time.sleep(1)
 
 
-
 def start_simulation(automaton, creatures, probabilityToInfect):
-    stop = False
-    while not stop:
-        for creature in creatures:
-            optionsToInfect = creature.get_current_cell().get_neighbors()
-            creature.infect(probabilityToInfect, optionsToInfect)
+    af = CellAutomatonGame(automaton, creatures, probabilityToInfect)
+    start_animation(af)
 
-        for creature in creatures:
+
+class CellAutomatonGame(CellAutomatonGameBase):
+    def __init__(self, automaton, creatures, probabilityToInfect):
+        self.automaton = automaton
+        self.creatures = creatures
+        self.probabilityToInfect = probabilityToInfect
+
+        self.steps = 0
+        self.board = self.get_board()
+
+    def get_board(self):
+        return get_board(self.automaton, self.creatures)
+
+    def get_step(self):
+        return self.steps
+
+    def update_board(self):
+        self.steps += 1
+        # update state
+        for creature in self.creatures:
+            optionsToInfect = creature.get_current_cell().get_neighbors()
+            creature.infect(self.probabilityToInfect, optionsToInfect)
+
+        for creature in self.creatures:
             optionsToMove = creature.get_current_cell().get_neighbors()
             optionsToMove.append(creature.get_current_cell())
             creature.move(optionsToMove)
 
-        printBoard(get_board(automaton, creatures))
+        # update board with respect to new state
+        self.board = self.get_board()
 
 
 if __name__ == '__main__':
