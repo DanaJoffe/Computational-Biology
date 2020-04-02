@@ -10,9 +10,9 @@ class CellAutomatonGame(CellAutomatonGameBase):
         self.probabilityToInfect = probabilityToInfect
 
         self.steps = 0
-        self.board = self.get_board()
+        self.board = self.__create_board()
 
-    def get_board(self):
+    def __create_board(self):
         automaton = self.automaton
         creatures = self.creatures
         # init empty board
@@ -32,6 +32,9 @@ class CellAutomatonGame(CellAutomatonGameBase):
                     board[row][col] = EMPTY
         return board
 
+    def get_board(self):
+        return self.board
+
     def get_step(self):
         return self.steps
 
@@ -48,7 +51,7 @@ class CellAutomatonGame(CellAutomatonGameBase):
             creature.move(optionsToMove)
 
         # update board with respect to new state
-        self.board = self.get_board()
+        self.board = self.__create_board()
 
     def print_automaton(self):
         print("\n\n*******************************************************\n\n")
