@@ -9,6 +9,7 @@ class Cell(Subject):
     def __init__(self):
         self.neighbors = []
         self.isOccupied = False
+        self.isInfected = False
         self.observers = []
 
     def set_neighbors(self, n):
@@ -17,6 +18,11 @@ class Cell(Subject):
     def get_neighbors(self):
         return copy(self.neighbors)
 
+    def get_is_infected(self):
+        return self.isOccupied and self.isInfected
+
+    def set_is_infected(self, isInfected):
+        self.isInfected = isInfected
 
     def is_occupied(self):
         return self.isOccupied

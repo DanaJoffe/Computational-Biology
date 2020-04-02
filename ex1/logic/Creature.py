@@ -8,12 +8,13 @@ class Creature(Observer):
     def __init__(self, currentCell, isInfected = False):
         self.currentCell = None
         self.set_current_cell(currentCell)
-        self.isInfected = isInfected
+        self.set_infected(isInfected)
 
     def set_current_cell(self, target):
         target.attach(self)
         target.set_occupied(True)
         self.currentCell = target
+        self.currentCell.set_is_infected(self.isInfected)
 
     def get_current_cell(self):
         return self.currentCell
@@ -25,6 +26,8 @@ class Creature(Observer):
         self.leave_the_current_location()
         target = self.find_next_location(optionCells)
         self.set_current_cell(target)
+        self.get_current_cell().set_is_infected(self.isInfected)
+
 
     def infect(self, probability, optionCells):
         if self.isInfected:
