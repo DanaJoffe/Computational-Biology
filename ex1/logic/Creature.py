@@ -6,21 +6,24 @@ from ObserverPattern.Subject import Subject
 
 class Creature(Observer):
     def __init__(self, currentCell, isInfected = False):
+        self.isInfected = isInfected
         self.currentCell = None
         self.set_current_cell(currentCell)
-        self.set_infected(isInfected)
+
 
     def set_current_cell(self, target):
         target.attach(self)
         target.set_occupied(True)
+        target.set_is_infected(self.isInfected)
         self.currentCell = target
-        self.currentCell.set_is_infected(self.isInfected)
+
 
     def get_current_cell(self):
         return self.currentCell
 
     def set_infected(self, isInfected):
         self.isInfected = isInfected
+        self.get_current_cell().set_is_infected(self.isInfected)
 
     def move(self, optionCells):
         self.leave_the_current_location()

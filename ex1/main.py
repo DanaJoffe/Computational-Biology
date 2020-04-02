@@ -11,7 +11,7 @@ def start_simulation(automaton, creatures, probabilityToInfect):
 if __name__ == '__main__':
     rows = 10
     cols = 10
-    N = 5
+    N = 3
     P = 0.5
 
     cellularAutomaton = create_automaton(rows, cols)

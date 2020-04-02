@@ -20,14 +20,12 @@ class CellAutomatonGame(CellAutomatonGameBase):
         for row in range(len(board)):
             for col in range(len(board[0])):
                 if automaton[row][col].isOccupied:
-                    for c in creatures:
-                        if c.get_current_cell() == automaton[row][col]:
-                            if c.isInfected:
-                                board[row][col] = SICK
-                                break
-                            else:
-                                board[row][col] = HEALTHY
-                                break
+                    if automaton[row][col].get_is_infected():
+                        board[row][col] = SICK
+                        continue
+                    else:
+                        board[row][col] = HEALTHY
+                        continue
                 else:
                     board[row][col] = EMPTY
         return board
