@@ -20,3 +20,8 @@ class CellAutomatonGameBase(ABC):
     @abstractmethod
     def build(self, N, P, K, L):
         """do initialization"""
+
+    @abstractmethod
+    def get_size(self):
+        """return amount of cells in the game board"""
+

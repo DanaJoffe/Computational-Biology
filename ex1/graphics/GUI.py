@@ -20,7 +20,7 @@ class CellAutomatonGameGUI(object):
     """
     def __init__(self, game):
         self.game = game
-        self.N = 5
+        self.N = int(self.game.get_size()/8)
         self.P = 0.5
         self.K = None
         self.L = None
@@ -32,7 +32,7 @@ class CellAutomatonGameGUI(object):
         self.p_slider = Slider(plt.axes([0.25, 0.1, 0.65, 0.03], facecolor=axcolor),
                           'P', 0.0, 1.0, valinit=self.P)
         self.n_slider = Slider(plt.axes([0.25, 0.15, 0.65, 0.03], facecolor=axcolor),
-                          'N', 1.0, 300.0, valinit=self.N, valstep=1.0)
+                          'N', 1.0, int(self.game.get_size()/2), valinit=self.N, valstep=1.0)
         y_axis_speed = 0.92
         plt.text(0.80, y_axis_speed, 'speed: ', transform=self.fig.transFigure)
         self.speed_box = plt.text(0.88, y_axis_speed, '', transform=self.fig.transFigure)

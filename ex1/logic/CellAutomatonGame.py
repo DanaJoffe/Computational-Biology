@@ -22,32 +22,35 @@ class CellAutomatonGame(CellAutomatonGameBase, Subject):
         self.creatures = create_creatures(self.automaton, N)
         self.probabilityToInfect = P
         self.steps = 0
-        self.board = self.__create_board()
+        self.__create_board()
         self.notify()
 
     def __create_board(self):
         automaton = self.automaton
-        creatures = self.creatures
         # init empty board
-        board = [["_" for _ in range(len(automaton[0]))] for _ in range(len(automaton))]
-        for row in range(len(board)):
-            for col in range(len(board[0])):
+        if not self.board:
+            self.board = [["_" for _ in range(len(automaton[0]))] for _ in range(len(automaton))]
+
+        for row in range(len(self.board)):
+            for col in range(len(self.board[0])):
                 if automaton[row][col].isOccupied:
                     if automaton[row][col].get_is_infected():
-                        board[row][col] = SICK
+                        self.board[row][col] = SICK
                         continue
                     else:
-                        board[row][col] = HEALTHY
+                        self.board[row][col] = HEALTHY
                         continue
                 else:
-                    board[row][col] = EMPTY
-        return board
+                    self.board[row][col] = EMPTY
 
     def get_board(self):
         return self.board
 
     def get_step(self):
         return self.steps
+
+    def get_size(self):
+        return self.rows * self.cols
 
     def update_board(self):
         self.steps += 1
@@ -62,7 +65,7 @@ class CellAutomatonGame(CellAutomatonGameBase, Subject):
             creature.move(optionsToMove)
 
         # update board with respect to new state
-        self.board = self.__create_board()
+        self.__create_board()
         self.notify()
 
     def print_automaton(self):
