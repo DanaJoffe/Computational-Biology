@@ -8,7 +8,7 @@ from configuration import SICK, HEALTHY, EMPTY
 
 class CellAutomatonGame(CellAutomatonGameBase, Subject):
 
-    def __init__(self, rows=20, columns=20):
+    def __init__(self, rows=200, columns=200):
         self.followers = []
         self.rows, self.cols = rows, columns
         self.automaton = None
