@@ -1,8 +1,9 @@
+from configuration import rows, cols
 from graphics.GUI import CellAutomatonGameGUI
 from logic.CellAutomatonGame import CellAutomatonGame
 
 if __name__ == '__main__':
-    gui = CellAutomatonGameGUI(CellAutomatonGame(200, 200))
+    gui = CellAutomatonGameGUI(CellAutomatonGame(rows, cols))
     gui.set_all()
     gui.start()
 

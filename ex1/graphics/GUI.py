@@ -2,7 +2,8 @@ from ObserverPattern.Observer import Observer
 from graphics.animation import CellAnimation
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button, TextBox
-from configuration import EMPTY, SICK
+from configuration import EMPTY, SICK, P, N
+
 
 # ICON_PLAY =  plt.imread('https://i.stack.imgur.com/ySW6o.png')
 # ICON_PAUSE = plt.imread("https://i.stack.imgur.com/tTa3H.png")
@@ -20,8 +21,8 @@ class CellAutomatonGameGUI(object):
     """
     def __init__(self, game):
         self.game = game
-        self.N = int(self.game.get_size()/8)
-        self.P = 0.5
+        self.N = N
+        self.P = P
         self.K = None
         self.L = None
 

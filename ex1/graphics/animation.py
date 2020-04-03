@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.animation as animation
 from matplotlib import colors
-from configuration import CELL_STATES, CELL_COLORS
+from configuration import CELL_STATES, CELL_COLORS, SPEED
 
 
 def create_cmap():
@@ -23,7 +23,7 @@ class CellAnimation(object):
     max_speed = 500
 
     def __init__(self, pause_button, play_button, speed_up_button, speed_down_button, speed_box, fig, ax):
-        self.speed = 250  # frames per second
+        self.speed = SPEED
         self.pause = True
         self.fig, self.ax = fig, ax
         pause_button.on_clicked(self.__pause)
