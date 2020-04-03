@@ -38,7 +38,7 @@ class Creature(Observer):
             notInfectious = False
 
             for cell in optionCells:
-                if cell.isOccupied:
+                if cell.isOccupied and not cell.isInfected:
                     isInfected = choices([infectious, notInfectious], weights=[probability, 1-probability])[0]
 
                     if isInfected:
