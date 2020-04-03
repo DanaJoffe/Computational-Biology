@@ -19,11 +19,11 @@ def create_cmap():
 
 
 class CellAnimation(object):
-    min_tbf = 1
-    max_tbf = 500
+    min_speed = 1
+    max_speed = 500
 
     def __init__(self, pause_button, play_button, speed_up_button, speed_down_button, speed_box, fig, ax):
-        self.time_bt_frames = 250
+        self.speed = 250  # frames per second
         self.pause = True
         self.fig, self.ax = fig, ax
         pause_button.on_clicked(self.__pause)
@@ -35,18 +35,21 @@ class CellAnimation(object):
         speed_down_button.on_clicked(self.__speed_down)
 
     def __write_speed(self):
-        speed = int(self.max_tbf + 1 - self.time_bt_frames)
-        # self.speed_box.set_val(speed)
-        self.speed_box.set_text(str(speed))
+        """
+        speed = # frames per second
+        """
+        self.speed_box.set_text(str(self.speed))
 
     def __speed_up(self, e):
-        self.time_bt_frames = max(self.time_bt_frames - 20, self.min_tbf)
-        self.animation.event_source.interval = self.time_bt_frames
+        self.speed = min(self.speed + 20, self.max_speed)
+        time_bt_frames = 1e3/self.speed
+        self.animation.event_source.interval = time_bt_frames
         self.__write_speed()
 
     def __speed_down(self, e):
-        self.time_bt_frames = min(self.time_bt_frames + 20, self.max_tbf)
-        self.animation.event_source.interval = self.time_bt_frames
+        self.speed = max(self.speed - 20, self.min_speed)
+        time_bt_frames = 1e3 / self.speed
+        self.animation.event_source.interval = time_bt_frames
         self.__write_speed()
 
     def __pause(self, event):
@@ -76,7 +79,7 @@ class CellAnimation(object):
             return img,
 
         self.animation = animation.FuncAnimation(self.fig, func=animate, frames=frame_gen,
-                                                 interval=self.time_bt_frames, init_func=init)
+                                                 interval=1e3 / self.speed, init_func=init)
         plt.show()
 
     def start(self, game):
