@@ -1,7 +1,7 @@
 import time
-from Subject import Subject
-from automaton_factory import create_automaton
-from creatures_factory import create_creatures
+from ObserverPattern.Subject import Subject
+from logic.automaton_factory import create_automaton
+from logic.creatures_factory import create_creatures
 from logic.CellAutomatonGameBase import CellAutomatonGameBase
 from configuration import SICK, HEALTHY, EMPTY
 

@@ -1,5 +1,5 @@
-from Observer import Observer
-from animation import CellAnimation
+from ObserverPattern.Observer import Observer
+from graphics.animation import CellAnimation
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button, TextBox
 from configuration import EMPTY, SICK
