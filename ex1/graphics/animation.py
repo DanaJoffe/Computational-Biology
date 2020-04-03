@@ -20,9 +20,10 @@ def create_cmap():
 
 class CellAnimation(object):
     min_speed = 1
-    max_speed = 500
+    max_speed = 40
 
     def __init__(self, pause_button, play_button, speed_up_button, speed_down_button, speed_box, fig, ax):
+        self.speed_step = 1
         self.speed = SPEED
         self.pause = True
         self.fig, self.ax = fig, ax
@@ -41,13 +42,13 @@ class CellAnimation(object):
         self.speed_box.set_text(str(self.speed))
 
     def __speed_up(self, e):
-        self.speed = min(self.speed + 20, self.max_speed)
+        self.speed = min(self.speed + self.speed_step, self.max_speed)
         time_bt_frames = 1e3/self.speed
         self.animation.event_source.interval = time_bt_frames
         self.__write_speed()
 
     def __speed_down(self, e):
-        self.speed = max(self.speed - 20, self.min_speed)
+        self.speed = max(self.speed - self.speed_step, self.min_speed)
         time_bt_frames = 1e3 / self.speed
         self.animation.event_source.interval = time_bt_frames
         self.__write_speed()

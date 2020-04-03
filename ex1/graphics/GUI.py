@@ -88,6 +88,7 @@ class Stat(Observer):
     """
     def __init__(self, game, fig, x=0.025, y=0.85):
         game.attach(self)
+        self.cells_amount = game.get_size()
 
         x_val_pos = x + 0.07
         plt.text(x, y, 'step: ', transform=fig.transFigure)
@@ -104,12 +105,10 @@ class Stat(Observer):
         Receive update from subject.
         """
         board = game.get_board()
-        cells_amount = 0
         sick_amount = 0
         creatures_amount = 0
         for row in board:
             for cell in row:
-                cells_amount += 1
                 if cell != EMPTY:
                     creatures_amount += 1
                     if cell == SICK:
