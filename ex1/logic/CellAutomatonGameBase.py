@@ -16,3 +16,7 @@ class CellAutomatonGameBase(ABC):
     @abstractmethod
     def update_board(self):
         """apply one game step and change the board"""
+
+    @abstractmethod
+    def build(self, N, P, K, L):
+        """do initialization"""
