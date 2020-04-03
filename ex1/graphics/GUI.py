@@ -15,8 +15,8 @@ class CellAutomatonGameGUI(object):
     1. N = # of creatures
     2. P = infection probability
     3. K = quarantine parameter
-    4. L = generation (iteration) from which the quarantine applied
-    5. speed of the animation
+    4. L = generation (iteration) from which the quarantine applies
+    5. animation's speed
     6. pause | play | reset buttons
     """
     def __init__(self, game):

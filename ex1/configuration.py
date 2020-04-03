@@ -9,7 +9,9 @@ CELL_COLORS = {EMPTY: 'white',
 
 rows = 200
 cols = 200
-N = 2100
-P = 0.5
+N = 2100  # number of creatures
+P = 0.5  # infection probability
+K = 0  # quarantine parameter
+L = None  # generation (iteration) from which the quarantine applies
 
-SPEED = 200 # frames per second
+SPEED = 200  # frames per second
