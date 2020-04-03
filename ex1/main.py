@@ -1,4 +1,4 @@
-from GUI import CellAutomatonGameGUI
+from graphics.GUI import CellAutomatonGameGUI
 from logic.CellAutomatonGame import CellAutomatonGame
 
 if __name__ == '__main__':
