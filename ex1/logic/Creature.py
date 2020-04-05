@@ -47,8 +47,6 @@ class Creature(Observer):
         self.currentCell.detach(self)
         self.currentCell.set_occupied(False)
 
-
-
     ##
     # The function finds the cell where the creature will go in the next step.
     #
