@@ -29,13 +29,20 @@ class CellAutomatonGameGUI(object):
     def __set_widgets(self):
         hcolor = None #'0.975'
         axcolor = 'white' # lightgoldenrodyellow
+        slider_width = 0.6
+        slider_hight = 0.03
+        slider_x_loc = 0.25
+        slider_y_loc = 0.2
+        gap = 0.05
+
         # [left, bottom, width, height]
-        self.k_slider = Slider(plt.axes([0.25, 0.175, 0.65, 0.03], facecolor=axcolor),
-                               'K', 0.0, 8.0, valinit=self.K, valstep=1.0)
-        self.p_slider = Slider(plt.axes([0.25, 0.1, 0.65, 0.03], facecolor=axcolor),
-                          'P', 0.0, 1.0, valinit=self.P)
-        self.n_slider = Slider(plt.axes([0.25, 0.15, 0.65, 0.03], facecolor=axcolor),
-                          'N', 1.0, int(self.game.get_size()/2), valinit=self.N, valstep=1.0)
+        self.k_slider = Slider(plt.axes([slider_x_loc, slider_y_loc, slider_width, slider_hight], facecolor=axcolor),
+                               'K', 0.0, 8.0, valinit=self.K, valstep=1.0, valfmt='%0.0f')
+        self.n_slider = Slider(plt.axes([slider_x_loc, slider_y_loc-gap, slider_width, slider_hight],
+                                        facecolor=axcolor), 'N', 1.0, int(self.game.get_size()/2), valinit=self.N,
+                               valstep=1.0, valfmt='%0.0f')
+        self.p_slider = Slider(plt.axes([slider_x_loc, slider_y_loc-2*gap, slider_width, slider_hight],
+                                        facecolor=axcolor), 'P', 0.0, 1.0, valinit=self.P)
         y_axis_speed = 0.92
         plt.text(0.80, y_axis_speed, 'speed: ', transform=self.fig.transFigure)
         self.speed_box = plt.text(0.88, y_axis_speed, '', transform=self.fig.transFigure)
