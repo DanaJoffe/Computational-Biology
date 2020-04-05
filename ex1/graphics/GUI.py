@@ -2,7 +2,7 @@ from ObserverPattern.Observer import Observer
 from graphics.animation import CellAnimation
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button, TextBox
-from configuration import EMPTY, SICK, P, N
+from configuration import EMPTY, SICK, P, N, K
 
 
 # ICON_PLAY =  plt.imread('https://i.stack.imgur.com/ySW6o.png')
@@ -23,13 +23,15 @@ class CellAutomatonGameGUI(object):
         self.game = game
         self.N = N
         self.P = P
-        self.K = None
+        self.K = K
         self.L = None
 
     def __set_widgets(self):
         hcolor = None #'0.975'
         axcolor = 'white' # lightgoldenrodyellow
         # [left, bottom, width, height]
+        self.k_slider = Slider(plt.axes([0.25, 0.175, 0.65, 0.03], facecolor=axcolor),
+                               'K', 0.0, 8.0, valinit=self.K, valstep=1.0)
         self.p_slider = Slider(plt.axes([0.25, 0.1, 0.65, 0.03], facecolor=axcolor),
                           'P', 0.0, 1.0, valinit=self.P)
         self.n_slider = Slider(plt.axes([0.25, 0.15, 0.65, 0.03], facecolor=axcolor),
@@ -52,9 +54,12 @@ class CellAutomatonGameGUI(object):
     def __set_n(self, e):
         self.N = int(self.n_slider.val)
 
+    def __set_k(self, e):
+        self.K = int(self.k_slider.val)
+
     def __reset_button_on_click(self, e):
         self.animation.stop()
-        self.game.build(self.N, self.P)
+        self.game.build(self.N, self.P, self.K)
 
     def set_all(self):
         self.fig, self.ax = plt.subplots()
@@ -63,13 +68,14 @@ class CellAutomatonGameGUI(object):
 
         self.p_slider.on_changed(self.__set_p)
         self.n_slider.on_changed(self.__set_n)
+        self.k_slider.on_changed(self.__set_k)
         self.reset_button.on_clicked(self.__reset_button_on_click)
 
         self.stat_displayer = Stat(self.game, self.fig)
 
     def start(self):
         # game = self.game_factory.create_game(self.N, self.P)
-        self.game.build(self.N, self.P)
+        self.game.build(self.N, self.P, self.K)
 
         self.animation = CellAnimation(self.pause_button, self.play_button, self.speed_up_button,
                                        self.speed_down_button, self.speed_box, self.fig, self.ax)

@@ -69,7 +69,7 @@ class CellAnimation(object):
                 yield game
 
         cmap, norm = create_cmap()
-        img = self.ax.matshow(game.get_board(), cmap=cmap, norm=norm)
+        img = self.ax.matshow(game.get_board(), cmap=cmap, norm=norm, aspect='auto')
         # ax.axis('off')
 
         def init():

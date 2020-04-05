@@ -16,11 +16,13 @@ class CellAutomatonGame(CellAutomatonGameBase, Subject):
         self.probabilityToInfect = None
         self.steps = None
         self.board = None
+        self.numberOfCreaturesInIsolation = None
 
     def build(self, N, P, K=0, L=None):
         self.automaton = create_automaton(self.rows, self.cols)
         self.creatures = create_creatures(self.automaton, N)
         self.probabilityToInfect = P
+        self.numberOfCreaturesInIsolation = K
         self.steps = 0
         self.__create_board()
         self.notify()
@@ -57,6 +59,9 @@ class CellAutomatonGame(CellAutomatonGameBase, Subject):
         # update state
         for creature in self.creatures:
             optionsToInfect = creature.get_current_cell().get_neighbors()
+
+            # subtract the creatures in isolation from the relevant options
+            optionsToInfect = optionsToInfect[self.numberOfCreaturesInIsolation :]
             creature.infect(self.probabilityToInfect, optionsToInfect)
 
         for creature in self.creatures:

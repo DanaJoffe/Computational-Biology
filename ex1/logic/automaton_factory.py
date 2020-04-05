@@ -14,14 +14,28 @@ def get_neighbors(automaton, row, col):
     rowUp = (row + 1) % numberOfRows
 
     neighbors = [
+        automaton[rowUp][col],
+
         automaton[rowUp][rightCol],
         automaton[row][rightCol],
         automaton[rowBelow][rightCol],
-        automaton[rowUp][col],
+
         automaton[rowBelow][col],
+
         automaton[rowBelow][leftCol],
         automaton[row][leftCol],
         automaton[rowUp][leftCol]
+
+        # automaton[rowUp][rightCol],
+        # automaton[row][rightCol],
+        # automaton[rowBelow][rightCol],
+        #
+        # automaton[rowUp][col],
+        # automaton[rowBelow][col],
+        #
+        # automaton[rowBelow][leftCol],
+        # automaton[row][leftCol],
+        # automaton[rowUp][leftCol]
     ]
 
     return neighbors

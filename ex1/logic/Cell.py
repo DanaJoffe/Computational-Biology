@@ -16,7 +16,7 @@ class Cell(Subject):
         self.neighbors = n
 
     def get_neighbors(self):
-        return copy(self.neighbors)
+        return self.neighbors
 
     def get_is_infected(self):
         return self.isOccupied and self.isInfected
