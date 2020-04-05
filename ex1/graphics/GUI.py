@@ -46,7 +46,7 @@ class CellAutomatonGameGUI(object):
         self.k_slider_loc.set_visible(False)
         self.l_slider_loc = self.fig.add_axes([slider_x_loc, slider_y_loc - 3 * gap, slider_width, slider_hight],
                                               facecolor=axcolor)
-        self.l_slider = Slider(self.l_slider_loc, 'L', 0.0, 1000.0, valinit=0, valstep=50.0, valfmt='%0.0f')
+        self.l_slider = Slider(self.l_slider_loc, 'L', 0.0, 1000.0, valinit=0, valstep=20.0, valfmt='%0.0f')
         self.l_slider_loc.set_visible(False)
 
         self.right_menu_x_loc = 0.025

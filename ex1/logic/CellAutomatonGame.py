@@ -61,7 +61,7 @@ class CellAutomatonGame(CellAutomatonGameBase, Subject):
 
     def update_board(self):
         self.steps += 1
-        if (self.steps >= self.numberOfStepsToTakeAction):
+        if (self.numberOfStepsToTakeAction != None and self.steps >= self.numberOfStepsToTakeAction):
             self.takeAction()
         # update state
         for creature in self.creatures:
