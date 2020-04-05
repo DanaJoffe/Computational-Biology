@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.animation as animation
 from matplotlib import colors
-from configuration import CELL_STATES, CELL_COLORS, SPEED
+from configuration import CELL_STATES, CELL_COLORS, SPEED, SHOW_LABELS
 
 
 def create_cmap():
@@ -70,7 +70,10 @@ class CellAnimation(object):
 
         cmap, norm = create_cmap()
         img = self.ax.matshow(game.get_board(), cmap=cmap, norm=norm, aspect='auto')
-        # ax.axis('off')
+        # Turn off tick labels
+        if not SHOW_LABELS:
+            self.ax.axes.get_xaxis().set_ticks([])
+            self.ax.axes.get_yaxis().set_ticks([])
 
         def init():
             return img,
