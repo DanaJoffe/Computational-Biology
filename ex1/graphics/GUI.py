@@ -1,8 +1,8 @@
 from ObserverPattern.Observer import Observer
 from graphics.animation import CellAnimation
 import matplotlib.pyplot as plt
-from matplotlib.widgets import Slider, Button, TextBox
-from configuration import EMPTY, SICK, P, N, K
+from matplotlib.widgets import Slider, Button, TextBox, CheckButtons
+from configuration import EMPTY, SICK, P, N, K, L
 
 
 # ICON_PLAY =  plt.imread('https://i.stack.imgur.com/ySW6o.png')
@@ -24,25 +24,35 @@ class CellAutomatonGameGUI(object):
         self.N = N
         self.P = P
         self.K = K
-        self.L = None
+        self.L = L
 
     def __set_widgets(self):
         hcolor = None #'0.975'
         axcolor = 'white' # lightgoldenrodyellow
-        slider_width = 0.6
-        slider_hight = 0.03
         slider_x_loc = 0.25
         slider_y_loc = 0.2
-        gap = 0.05
+        slider_width = 0.6
+        slider_hight = 0.021
+        gap = slider_hight + 0.01
 
         # [left, bottom, width, height]
-        self.k_slider = Slider(plt.axes([slider_x_loc, slider_y_loc, slider_width, slider_hight], facecolor=axcolor),
-                               'K', 0.0, 8.0, valinit=self.K, valstep=1.0, valfmt='%0.0f')
-        self.n_slider = Slider(plt.axes([slider_x_loc, slider_y_loc-gap, slider_width, slider_hight],
+        self.n_slider = Slider(plt.axes([slider_x_loc, slider_y_loc, slider_width, slider_hight],
                                         facecolor=axcolor), 'N', 1.0, int(self.game.get_size()/2), valinit=self.N,
                                valstep=1.0, valfmt='%0.0f')
-        self.p_slider = Slider(plt.axes([slider_x_loc, slider_y_loc-2*gap, slider_width, slider_hight],
+        self.p_slider = Slider(plt.axes([slider_x_loc, slider_y_loc-gap, slider_width, slider_hight],
                                         facecolor=axcolor), 'P', 0.0, 1.0, valinit=self.P)
+        self.k_slider_loc = plt.axes([slider_x_loc, slider_y_loc-2*gap, slider_width, slider_hight], facecolor=axcolor)
+        self.k_slider = Slider(self.k_slider_loc, 'K', 1.0, 8.0, valinit=self.K, valstep=1.0, valfmt='%0.0f')
+        self.k_slider_loc.set_visible(False)
+        self.l_slider_loc = self.fig.add_axes([slider_x_loc, slider_y_loc - 3 * gap, slider_width, slider_hight],
+                                              facecolor=axcolor)
+        self.l_slider = Slider(self.l_slider_loc, 'L', 0.0, 1000.0, valinit=0, valstep=50.0, valfmt='%0.0f')
+        self.l_slider_loc.set_visible(False)
+
+        self.right_menu_x_loc = 0.025
+        self.options_button = CheckButtons(plt.axes([self.right_menu_x_loc, slider_y_loc - 4 * gap, 0.18, 0.15]),
+                                           ['apply\nquarantine'])
+
         y_axis_speed = 0.92
         plt.text(0.80, y_axis_speed, 'speed: ', transform=self.fig.transFigure)
         self.speed_box = plt.text(0.88, y_axis_speed, '', transform=self.fig.transFigure)
@@ -62,11 +72,20 @@ class CellAutomatonGameGUI(object):
         self.N = int(self.n_slider.val)
 
     def __set_k(self, e):
-        self.K = int(self.k_slider.val)
+        check = self.options_button.get_status()[0]
+        self.k_slider_loc.set_visible(check)
+        self.k_slider.set_active(check)
+        self.K = int(self.k_slider.val) if check else 0
+
+    def __set_l(self, e):
+        check = self.options_button.get_status()[0]
+        self.l_slider_loc.set_visible(check)
+        self.l_slider.set_active(check)
+        self.L = int(self.l_slider.val) if check else None
 
     def __reset_button_on_click(self, e):
         self.animation.stop()
-        self.game.build(self.N, self.P, self.K)
+        self.game.build(self.N, self.P, self.K, self.L)
 
     def set_all(self):
         self.fig, self.ax = plt.subplots()
@@ -76,13 +95,17 @@ class CellAutomatonGameGUI(object):
         self.p_slider.on_changed(self.__set_p)
         self.n_slider.on_changed(self.__set_n)
         self.k_slider.on_changed(self.__set_k)
+        self.l_slider.on_changed(self.__set_l)
+
+        self.options_button.on_clicked(self.__set_l)
+        self.options_button.on_clicked(self.__set_k)
         self.reset_button.on_clicked(self.__reset_button_on_click)
 
-        self.stat_displayer = Stat(self.game, self.fig)
+        self.stat_displayer = Stat(self.game, self.fig, x=self.right_menu_x_loc)
 
     def start(self):
         # game = self.game_factory.create_game(self.N, self.P)
-        self.game.build(self.N, self.P, self.K)
+        self.game.build(self.N, self.P, self.K, self.L)
 
         self.animation = CellAnimation(self.pause_button, self.play_button, self.speed_up_button,
                                        self.speed_down_button, self.speed_box, self.fig, self.ax)
