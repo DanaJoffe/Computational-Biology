@@ -31,7 +31,6 @@ class Creature(Observer):
         self.set_current_cell(target)
         self.get_current_cell().set_is_infected(self.isInfected)
 
-
     def infect(self, probability, optionCells):
         if self.isInfected:
             infectious = True
@@ -48,8 +47,20 @@ class Creature(Observer):
         self.currentCell.detach(self)
         self.currentCell.set_occupied(False)
 
+
+
+    ##
+    # The function finds the cell where the creature will go in the next step.
+    #
+    # If the next cell isOccupied,i.e. there is a creature in the cell already,
+    # the creature will stay in its current cell
     def find_next_location(self, optionCells):
+        # find randomly the next cell
         target = choices(optionCells)[0]
+
+        ####################################################
+        # ***This code prevents two creatures from being in the same cell.***
+        ####################################################
         if target.isOccupied:
             target = self.currentCell
         return target

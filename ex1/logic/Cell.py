@@ -8,7 +8,11 @@ class Cell(Subject):
 
     def __init__(self):
         self.neighbors = []
+
+        # isOccupied tells if there is a creature on the cell now
         self.isOccupied = False
+
+        # isInfected tells if the creature on the cell is infected.
         self.isInfected = False
         self.observers = []
 
@@ -24,6 +28,7 @@ class Cell(Subject):
     def set_is_infected(self, isInfected):
         self.isInfected = isInfected
 
+    # The function return if there is a creature on the cell now
     def is_occupied(self):
         return self.isOccupied
 
