@@ -1,4 +1,6 @@
+from GameStatistics import GameStatistics
 from ObserverPattern.Observer import Observer
+from Subject import Subject
 from graphics.animation import CellAnimation
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button, TextBox, CheckButtons
@@ -101,30 +103,25 @@ class CellAutomatonGameGUI(object):
         self.options_button.on_clicked(self.__set_k)
         self.reset_button.on_clicked(self.__reset_button_on_click)
 
-        self.stat_displayer = Stat(self.game, self.fig, x=self.right_menu_x_loc)
-
     def start(self):
-        # game = self.game_factory.create_game(self.N, self.P)
+        gs = GameStatistics(self.game)
+        ShowStatistics(gs, self.fig, x=self.right_menu_x_loc)
         self.game.build(self.N, self.P, self.K, self.L)
-
         self.animation = CellAnimation(self.pause_button, self.play_button, self.speed_up_button,
                                        self.speed_down_button, self.speed_box, self.fig, self.ax)
         self.animation.start(self.game)
 
 
-class Stat(Observer):
+class ShowStatistics(Observer):
     """
     show the cellular automaton state:
     - # of infected creatures
     - iteration (time)
-
-    todo: calc % of infected creatures for timestep t
-    todo: calc infection rate = disease spreading rate
-    todo: look for K that enables linear growth and not exponential growth.
+    - % of sick creatures
     """
-    def __init__(self, game, fig, x=0.025, y=0.85):
-        game.attach(self)
-        self.cells_amount = game.get_size()
+    def __init__(self, follow, fig, x=0.025, y=0.85):
+        follow.attach(self)
+        self.cells_amount = None
 
         x_val_pos = x + 0.07
         plt.text(x, y, 'step: ', transform=fig.transFigure)
@@ -136,25 +133,22 @@ class Stat(Observer):
         plt.text(x, y - 0.1, '%sick: ', transform=fig.transFigure)
         self.sick_percentage_text = plt.text(x_val_pos, y - 0.1, '', transform=fig.transFigure)
 
-    def update(self, game):
+    def update(self, game_stat):
         """
         Receive update from subject.
         """
-        board = game.get_board()
-        sick_amount = 0
-        creatures_amount = 0
-        for row in board:
-            for cell in row:
-                if cell != EMPTY:
-                    creatures_amount += 1
-                    if cell == SICK:
-                        sick_amount += 1
-        step = game.get_step()
-        self.sick_text.set_text(str(sick_amount))
-        self.step_text.set_text(str(step))
-        self.sick_percentage_text.set_text("{:.1f}".format(sick_amount*100/creatures_amount))
+        self.sick_text.set_text(str(game_stat.sick_amount))
+        self.step_text.set_text(str(game_stat.step))
+        self.sick_percentage_text.set_text("{:.1f}".format(game_stat.sick_amount*100/game_stat.creatures_amount))
 
 
-
+class Graph(Observer):
+    """
+    todo: calc % of infected creatures for timestep t
+    todo: calc infection rate = disease spreading rate
+    todo: look for K that enables linear growth and not exponential growth.
+    """
+    def update(self, subject):
+        pass
 
 
