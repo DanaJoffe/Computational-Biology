@@ -20,7 +20,6 @@ class CellAutomatonGame(CellAutomatonGameBase, Subject):
         self.numberOfStepsToTakeAction = None
 
     def build(self, N, P, K=0, L=0):
-        print("N={} P={} K={} L={}".format(N, P, K, L))
         self.automaton = create_automaton(self.rows, self.cols)
         self.creatures = create_creatures(self.automaton, N)
         self.probabilityToInfect = P

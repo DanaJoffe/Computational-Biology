@@ -14,6 +14,6 @@ P = 0.5  # infection probability
 K = 0  # quarantine parameter
 L = None  # generation (iteration) from which the quarantine applies
 
-SPEED = 10  # frames per second
+SPEED = 40  # frames per second
 
 SHOW_LABELS = False
