@@ -1,6 +1,4 @@
-import time
 import matplotlib.pyplot as plt
-import numpy as np
 import matplotlib.animation as animation
 from matplotlib import colors
 from configuration import CELL_STATES, CELL_COLORS, SPEED, SHOW_LABELS

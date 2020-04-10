@@ -25,3 +25,7 @@ class CellAutomatonGameBase(ABC):
     def get_size(self):
         """return amount of cells in the game board"""
 
+    @abstractmethod
+    def get_params(self):
+        """return game's parameters"""
+

@@ -58,6 +58,10 @@ class CellAutomatonGame(CellAutomatonGameBase, Subject):
     def get_size(self):
         return self.rows * self.cols
 
+    def get_params(self):
+        """ returns P, K, L"""
+        return self.probabilityToInfect, self.numberOfCreaturesInIsolation, self.numberOfStepsToTakeAction
+
     def update_board(self):
         self.steps += 1
         if (self.numberOfStepsToTakeAction != None and self.steps >= self.numberOfStepsToTakeAction):

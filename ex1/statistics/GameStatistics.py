@@ -1,19 +1,24 @@
-from Observer import Observer
-from Subject import Subject
+from ObserverPattern.Observer import Observer
+from ObserverPattern.Subject import Subject
 from configuration import EMPTY, SICK
 
 
 class GameStatistics(Observer, Subject):
     """
     follow the game and calculate statistics.
+    informs whoever wants to know about the statistics.
     """
     def __init__(self, game):
-        self.followers = []
+        self._followers = []
         game.attach(self)
         self.cells_amount = game.get_size()
         self.step = None
         self.sick_amount = None
-        self.creatures_amount = None
+        self.creatures_amount = None # N
+        self.sick_percentage = None
+        self.K = None
+        self.L = None
+        self.P = None
 
     def update(self, game):
         """
@@ -31,6 +36,8 @@ class GameStatistics(Observer, Subject):
         self.step = game.get_step()
         self.sick_amount = sick_amount
         self.creatures_amount = creatures_amount
+        self.sick_percentage = self.sick_amount*100/self.creatures_amount
+        self.P, self.K, self.L = game.get_params()
 
         self.notify()
 
@@ -38,18 +45,20 @@ class GameStatistics(Observer, Subject):
         """
         Attach an observer to the subject.
         """
-        self.followers.append(observer)
+        self._followers.append(observer)
 
     def detach(self, observer):
         """
         Detach an observer from the subject.
         """
-        self.followers.remove(observer)
+        self._followers.remove(observer)
 
     def notify(self):
         """
         Notify all observers about an event.
         """
-        for follower in self.followers:
-            follower.update(self)
-
+        for follower in self._followers:
+            try:
+                follower.update(self)
+            except:
+                self.detach(follower)

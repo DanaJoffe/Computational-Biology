@@ -1,5 +1,5 @@
 from configuration import rows, cols
-from graphics.GUI import CellAutomatonGameGUI
+from graphics.CellAutomatonGameGUI import CellAutomatonGameGUI
 from logic.CellAutomatonGame import CellAutomatonGame
 
 if __name__ == '__main__':
