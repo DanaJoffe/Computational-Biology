@@ -3,7 +3,6 @@ from ObserverPattern.Observer import Observer
 
 
 class StatAccumulator(Observer):
-    """ shows on GUI """
     def __init__(self, game_stat, button=None):
         game_stat.attach(self)
         if button:
