@@ -3,6 +3,7 @@ from ObserverPattern.Observer import Observer
 
 
 class StatAccumulator(Observer):
+    """ save how many sick creatures were at every time step """
     def __init__(self, game_stat, button=None):
         game_stat.attach(self)
         if button:
@@ -16,6 +17,7 @@ class StatAccumulator(Observer):
         self.K = None
 
     def reset_data(self, game_stat):
+        """ reset all statistics memory from previous game and set parameters as at current game """
         self.N = game_stat.creatures_amount
         self.L = game_stat.L
         self.P = game_stat.P
@@ -24,6 +26,7 @@ class StatAccumulator(Observer):
         self.steps = []
 
     def update(self, game_stat):
+        """ accumulate statistics info from current time-step """
         step = game_stat.step
         if step == 0:
             # new game
@@ -32,4 +35,5 @@ class StatAccumulator(Observer):
         self.steps.append(game_stat.step)
 
     def export_data(self, e):
+        """ write and save all current game's data to external file """
         GamesDataHandler.add(self.__dict__)

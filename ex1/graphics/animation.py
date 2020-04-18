@@ -17,6 +17,7 @@ def create_cmap():
 
 
 class CellAnimation(object):
+    """ manages the automaton animation """
     min_speed = 1
     max_speed = 40
 
@@ -34,33 +35,35 @@ class CellAnimation(object):
         speed_down_button.on_clicked(self.__speed_down)
 
     def __write_speed(self):
-        """
-        speed = # frames per second
-        """
+        """ update visible speed value on the gui """
         self.speed_box.set_text(str(self.speed))
 
     def __speed_up(self, e):
+        """ on-click event function: increase animation's speed """
         self.speed = min(self.speed + self.speed_step, self.max_speed)
         time_bt_frames = 1e3/self.speed
         self.animation.event_source.interval = time_bt_frames
         self.__write_speed()
 
     def __speed_down(self, e):
+        """ on-click event function: decrease animation's speed """
         self.speed = max(self.speed - self.speed_step, self.min_speed)
         time_bt_frames = 1e3 / self.speed
         self.animation.event_source.interval = time_bt_frames
         self.__write_speed()
 
-    def __pause(self, event):
-        # on-click event function
+    def __pause(self, e):
+        """ on-click event function: pause animation """
         self.pause = True
 
     def __start(self, event):
-        # on-click event function
+        """ on-click event function: resume animation """
         self.pause = False
 
     def __create_loop(self, game):
+        """ create animation's loop"""
         def frame_gen():
+            """ generator function: generates every frame in the game """
             while True:
                 if not self.pause:
                     game.update_board()
@@ -68,7 +71,7 @@ class CellAnimation(object):
 
         cmap, norm = create_cmap()
         img = self.ax.matshow(game.get_board(), cmap=cmap, norm=norm, aspect='auto')
-        # Turn off tick labels
+        # turn off tick labels
         if not SHOW_LABELS:
             self.ax.axes.get_xaxis().set_ticks([])
             self.ax.axes.get_yaxis().set_ticks([])
@@ -85,9 +88,9 @@ class CellAnimation(object):
         plt.show()
 
     def start(self, game):
+        """ start animation's loop """
         self.__create_loop(game)
 
     def stop(self):
+        """ pause animation """
         self.__pause(None)
-
-

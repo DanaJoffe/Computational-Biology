@@ -19,7 +19,7 @@ L = None  # generation (iteration) from which the quarantine applies
 SPEED = 40  # frames per second
 
 SHOW_LABELS = False
-ALLOW_SAVE_DATA = True
+ALLOW_SAVE_DATA = False
 SHOW_ONLINE_GRAPH = True
 
 # all data from the games will be saved in DATA_PATH, which is a file named 'data' under statistics directory.

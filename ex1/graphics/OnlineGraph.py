@@ -3,13 +3,13 @@ import matplotlib.pyplot as plt
 
 
 class OnlineGraph(Observer):
+    """ draws an online graph of sick percentage over time steps """
     def __init__(self, game_stat):
         game_stat.attach(self)
         self.sick_per_timestep = []
         self.steps = []
 
         self.fig, self.ax = plt.subplots(figsize=(4,4))
-        # self.ax.tight_layout()
         plt.gcf().subplots_adjust(bottom=0.14, left=0.2)
 
         self.title = 'sickness spread speed'
@@ -19,6 +19,7 @@ class OnlineGraph(Observer):
         self.line, = self.ax.plot(self.steps, self.sick_per_timestep)
 
     def reset_graph(self):
+        """ delete the graph and reset scale """
         self.sick_per_timestep = []
         self.steps = []
         self.ax.clear()
@@ -27,6 +28,7 @@ class OnlineGraph(Observer):
         self.ax.set_title(self.title)
 
     def update(self, game_stat):
+        """ updates the graph according to the current data. the function is called at every game iteration """
         step = game_stat.step
         if step == 0:
             # new game

@@ -8,10 +8,6 @@ from matplotlib.widgets import Slider, Button, CheckButtons
 from configuration import P, N, K, L, ALLOW_SAVE_DATA, SHOW_ONLINE_GRAPH
 
 
-# ICON_PLAY =  plt.imread('https://i.stack.imgur.com/ySW6o.png')
-# ICON_PAUSE = plt.imread("https://i.stack.imgur.com/tTa3H.png")
-
-
 class CellAutomatonGameGUI(object):
     """
     GUI to control:
@@ -29,9 +25,14 @@ class CellAutomatonGameGUI(object):
         self.K = K
         self.L = L
 
+        # future members
+        self.fig, self.ax = None, None
+        self.animation = None
+
     def __set_widgets(self):
-        hcolor = None #'0.975'
-        axcolor = 'white' # lightgoldenrodyellow
+        """ set all sliders and buttons that are in the gui's responsibility """
+        hcolor = None
+        axcolor = 'white'
         slider_x_loc = 0.25
         slider_y_loc = 0.2
         slider_width = 0.6
@@ -70,33 +71,39 @@ class CellAutomatonGameGUI(object):
         self.speed_down_button = Button(plt.axes([0.96, y_axis_speed, 0.02, 0.03]), '-', hovercolor=hcolor)
 
         # control animation buttons
-        self.play_button = Button(plt.axes([0.8, 0.025, 0.1, 0.04]), 'play', color=axcolor, hovercolor=hcolor) # '', image=ICON_PLAY)
+        self.play_button = Button(plt.axes([0.8, 0.025, 0.1, 0.04]), 'play', color=axcolor, hovercolor=hcolor)
         self.pause_button = Button(plt.axes([0.69, 0.025, 0.1, 0.04]), 'pause', color=axcolor, hovercolor=hcolor)
         self.reset_button = Button(plt.axes([0.56, 0.025, 0.12, 0.04]), 'reset', color=axcolor, hovercolor=hcolor)
 
     def __set_p(self, e):
+        """ on-click function: change P slider value """
         self.P = self.p_slider.val
 
     def __set_n(self, e):
+        """ on-click function: change N slider value """
         self.N = int(self.n_slider.val)
 
     def __set_k(self, e):
+        """ on-click function: change K slider value """
         check = self.options_button.get_status()[0]
         self.k_slider_loc.set_visible(check)
         self.k_slider.set_active(check)
         self.K = int(self.k_slider.val) if check else 0
 
     def __set_l(self, e):
+        """ on-click function: change L slider value """
         check = self.options_button.get_status()[0]
         self.l_slider_loc.set_visible(check)
         self.l_slider.set_active(check)
         self.L = int(self.l_slider.val) if check else None
 
     def __reset_button_on_click(self, e):
+        """ on-click function: pause and reset the game with current parameters """
         self.animation.stop()
         self.game.build(self.N, self.P, self.K, self.L)
 
     def set_all(self):
+        """ create gui's visible elements and attach them to event-functions """
         self.fig, self.ax = plt.subplots()
         plt.subplots_adjust(left=0.25, bottom=0.25)
         self.__set_widgets()
@@ -111,6 +118,7 @@ class CellAutomatonGameGUI(object):
         self.reset_button.on_clicked(self.__reset_button_on_click)
 
     def start(self):
+        """ create all entities and start the animation """
         # calculate game's statistics for each time step
         gs = GameStatistics(self.game)
         # follow statistics

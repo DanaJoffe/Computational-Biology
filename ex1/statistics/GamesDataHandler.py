@@ -10,8 +10,10 @@ def create_data_file():
 
 
 class GamesDataHandler(object):
+    """ handles saving & reading game's data """
     @staticmethod
     def add(data: dict):
+        """ add current game's information to the data file """
         create_data_file()
         with open(DATA_PATH, "a") as file:
             to_write = json.dumps(data) + '\n'
@@ -19,6 +21,7 @@ class GamesDataHandler(object):
 
     @staticmethod
     def get(path=None):
+        """ get all data from previous games"""
         create_data_file()
         with open(path if path else DATA_PATH, 'r') as f:
             data = f.readlines()
