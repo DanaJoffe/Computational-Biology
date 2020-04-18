@@ -28,4 +28,3 @@ class CellAutomatonGameBase(ABC):
     @abstractmethod
     def get_params(self):
         """return game's parameters"""
-

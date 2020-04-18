@@ -13,30 +13,30 @@ def find_empty_cell(automaton):
     return cell
 
 
-def find_empty_cells(automaton, numberOfCells):
+def find_empty_cells(automaton, number_of_cells):
     cells = []
-    for _ in range(numberOfCells):
+    for _ in range(number_of_cells):
         cell = find_empty_cell(automaton)
         cell.set_occupied(True)
         cells.append(cell)
     return cells
 
 
-def randomly_set_infected_creatures(creatures, numberOfCreatures):
-    selectedCretures = sample(creatures, numberOfCreatures)
+def randomly_set_infected_creatures(creatures, number_of_creatures):
+    selected_creatures = sample(creatures, number_of_creatures)
 
-    for creature in selectedCretures:
+    for creature in selected_creatures:
         creature.set_infected(True)
 
 
-def create_creatures(automaton, numberOfCreatures, numberOfInfected = 1):
+def create_creatures(automaton, number_of_creatures, number_of_infected=1):
     creatures = []
-    emptyCells = find_empty_cells(automaton, numberOfCreatures)
+    empty_cells = find_empty_cells(automaton, number_of_creatures)
 
-    for cell in emptyCells:
+    for cell in empty_cells:
         c = Creature(cell)
         creatures.append(c)
 
-    randomly_set_infected_creatures(creatures, numberOfInfected)
+    randomly_set_infected_creatures(creatures, number_of_infected)
 
     return creatures

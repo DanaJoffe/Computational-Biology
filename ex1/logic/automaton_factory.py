@@ -5,37 +5,26 @@ def get_neighbors(automaton, row, col):
     if not automaton:
         return None
 
-    numberOfRows = len(automaton)
-    numberOfCols = len(automaton[0])
+    number_of_rows = len(automaton)
+    number_of_cols = len(automaton[0])
 
-    leftCol = (col - 1) % numberOfCols
-    rightCol = (col + 1) % numberOfCols
-    rowBelow = (row - 1) % numberOfRows
-    rowUp = (row + 1) % numberOfRows
+    left_col = (col - 1) % number_of_cols
+    right_col = (col + 1) % number_of_cols
+    row_below = (row - 1) % number_of_rows
+    row_up = (row + 1) % number_of_rows
 
     neighbors = [
-        automaton[rowUp][col],
+        automaton[row_up][col],
 
-        automaton[rowUp][rightCol],
-        automaton[row][rightCol],
-        automaton[rowBelow][rightCol],
+        automaton[row_up][right_col],
+        automaton[row][right_col],
+        automaton[row_below][right_col],
 
-        automaton[rowBelow][col],
+        automaton[row_below][col],
 
-        automaton[rowBelow][leftCol],
-        automaton[row][leftCol],
-        automaton[rowUp][leftCol]
-
-        # automaton[rowUp][rightCol],
-        # automaton[row][rightCol],
-        # automaton[rowBelow][rightCol],
-        #
-        # automaton[rowUp][col],
-        # automaton[rowBelow][col],
-        #
-        # automaton[rowBelow][leftCol],
-        # automaton[row][leftCol],
-        # automaton[rowUp][leftCol]
+        automaton[row_below][left_col],
+        automaton[row][left_col],
+        automaton[row_up][left_col]
     ]
 
     return neighbors
@@ -45,17 +34,17 @@ def set_neighbors(automaton):
     if not automaton:
         return None
 
-    numberOfRows = len(automaton)
-    numberOfCols = len(automaton[0])
+    number_of_rows = len(automaton)
+    number_of_cols = len(automaton[0])
 
-    for row in range(numberOfRows):
-        for col in range(numberOfCols):
+    for row in range(number_of_rows):
+        for col in range(number_of_cols):
             neighbors = get_neighbors(automaton, row, col)
             automaton[row][col].neighbors = neighbors
 
 
-def create_automaton(numberOfRows, numberOfCols):
-    automaton = [[Cell() for _ in range(numberOfCols)] for _ in range(numberOfRows)]
+def create_automaton(number_of_rows, number_of_cols):
+    automaton = [[Cell() for _ in range(number_of_cols)] for _ in range(number_of_rows)]
 
     set_neighbors(automaton)
     return automaton

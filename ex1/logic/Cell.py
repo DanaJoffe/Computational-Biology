@@ -1,6 +1,3 @@
-from copy import copy
-
-from ObserverPattern.Observer import Observer
 from ObserverPattern.Subject import Subject
 
 
@@ -28,8 +25,8 @@ class Cell(Subject):
     def set_is_infected(self, isInfected):
         self.isInfected = isInfected
 
-    # The function return if there is a creature on the cell now
     def is_occupied(self):
+        """ the function return if there is a creature on the cell now """
         return self.isOccupied
 
     def set_occupied(self, isOccupied):
@@ -38,8 +35,8 @@ class Cell(Subject):
     def notify_of_infection(self):
         self.notify()
 
-    # Implements Subject from ObserverPattern - In case of corona infection
     def attach(self, observer):
+        """ implements Subject from ObserverPattern - In case of corona infection """
         self.observers.append(observer)
 
     def detach(self, observer):

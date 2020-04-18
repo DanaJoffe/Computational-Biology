@@ -17,16 +17,16 @@ class CellAutomatonGame(CellAutomatonGameBase, Subject):
         self.steps = None
         self.board = None
         self.numberOfCreaturesInIsolation = None
-        self.numberOfStepsToTakeAction = None
+        self.number_of_steps_to_take_action = None
 
     def build(self, N, P, K=0, L=0):
         self.automaton = create_automaton(self.rows, self.cols)
         self.creatures = create_creatures(self.automaton, N)
         self.probabilityToInfect = P
         self.numberOfCreaturesInIsolation = K
-        self.numberOfStepsToTakeAction = L
+        self.number_of_steps_to_take_action = L
 
-        self.isIsolationActivated = False
+        self.is_isolation_activated = False
         self.steps = 0
         self.__create_board()
         self.notify()
@@ -60,26 +60,26 @@ class CellAutomatonGame(CellAutomatonGameBase, Subject):
 
     def get_params(self):
         """ returns P, K, L"""
-        return self.probabilityToInfect, self.numberOfCreaturesInIsolation, self.numberOfStepsToTakeAction
+        return self.probabilityToInfect, self.numberOfCreaturesInIsolation, self.number_of_steps_to_take_action
 
     def update_board(self):
         self.steps += 1
-        if (self.numberOfStepsToTakeAction != None and self.steps >= self.numberOfStepsToTakeAction):
-            self.takeAction()
+        if self.number_of_steps_to_take_action != None and self.steps >= self.number_of_steps_to_take_action:
+            self.take_action()
         # update state
         for creature in self.creatures:
-            optionsToInfect = creature.get_current_cell().get_neighbors()
+            options_to_infect = creature.get_current_cell().get_neighbors()
 
             # subtract the creatures in isolation from the relevant options
-            if self.isIsolationActivated:
-                optionsToInfect = optionsToInfect[self.numberOfCreaturesInIsolation:]
+            if self.is_isolation_activated:
+                options_to_infect = options_to_infect[self.numberOfCreaturesInIsolation:]
 
-            creature.infect(self.probabilityToInfect, optionsToInfect)
+            creature.infect(self.probabilityToInfect, options_to_infect)
 
         for creature in self.creatures:
-            optionsToMove = creature.get_current_cell().get_neighbors()
-            optionsToMove.append(creature.get_current_cell())
-            creature.move(optionsToMove)
+            options_to_move = creature.get_current_cell().get_neighbors()
+            options_to_move.append(creature.get_current_cell())
+            creature.move(options_to_move)
 
         # update board with respect to new state
         self.__create_board()
@@ -113,5 +113,5 @@ class CellAutomatonGame(CellAutomatonGameBase, Subject):
         for f in self.followers:
             f.update(self)
 
-    def takeAction(self):
-        self.isIsolationActivated = True
+    def take_action(self):
+        self.is_isolation_activated = True
