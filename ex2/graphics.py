@@ -29,7 +29,7 @@ def create_cmap(cell_colors: Mapping[CellState, Color]):
 def show_mat(board):
     fig, ax = plt.subplots()
     cmap, norm = create_cmap(CELL_COLORS)
-    ax.imshow(board, interpolation='nearest')#, cmap=cmap)
+    ax.imshow(board, interpolation='nearest')
 
     ax.set(xticks=[], yticks=[])
     ax.axis('image')

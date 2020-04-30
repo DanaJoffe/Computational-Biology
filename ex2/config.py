@@ -3,7 +3,7 @@ import random
 # GA parameters
 POPULATION_SIZE = 100
 ELITISM = 2
-MUTATION_RATE = .001
+MUTATION_RATE = .01
 CROSSOVER_RATE = .75
 # tournament_size = None
 

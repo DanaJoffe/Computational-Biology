@@ -7,8 +7,7 @@ from GeneticAlgoAPI.mutation_strategy import BinaryMutation
 from GeneticAlgoAPI.selection_strategy import RouletteWheelSelection
 from config import MUTATION_RATE, CROSSOVER_RATE, POPULATION_SIZE, ELITISM
 from graphics import show_mat
-from run_ga import build_and_run
-
+from run_ga import build_and_run, get_time_units
 
 """ Map Paint problem """
 
@@ -87,15 +86,16 @@ class MapPaintGA(RouletteWheelSelection, SinglePointCrossover, BinaryMutation, A
 
 
 def main():
-    mutation_rate = .1
+    mutation_rate = MUTATION_RATE
     crossover_rate = CROSSOVER_RATE
     population_size = POPULATION_SIZE
     elitism_count = ELITISM
 
-    (time, unit), chromo = build_and_run(mutation_rate, crossover_rate, population_size, elitism_count,
+    # for i in range(50):
+    time, chromo = build_and_run(mutation_rate, crossover_rate, population_size, elitism_count,
                                          MapPaintGA, MapPaintChromosome)
 
-    print("run for {} {}".format(time, unit))
+    print("run for {} {}".format(*get_time_units(time)))
     show_mat(chromo.to_matrix())
 
 

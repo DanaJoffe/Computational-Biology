@@ -17,11 +17,10 @@ def get_time_units(time):
     return time, unit
 
 
-def evaluate(population, gen, ga):
+def evaluate(population, gen):
     fittest = population.get_fittest()
     f = fittest.get_fitness()
-    print("gen: {} fit: {} chromo: {}".format(str(gen), ga.max_score, str(fittest)))
-    # print("gen: {} fit: {}".format(str(gen), ga.max_score))
+    print("gen: {} fit: {} chromo: {}".format(str(gen), f, str(fittest)))
 
 
 def run(ga, population):
@@ -29,7 +28,7 @@ def run(ga, population):
 
     ga.set_fitness_scores(population)
     gen = 0
-    evaluate(population, gen, ga)
+    evaluate(population, gen)
     while not ga.get_stop_cond(population):
         gen += 1
         elite = ga.apply_elitism(population)
@@ -39,10 +38,10 @@ def run(ga, population):
         population.add_chromosome(elite)
         ga.set_fitness_scores(population)
 
-        evaluate(population, gen, ga)
+        evaluate(population, gen)
 
     end = timer()
-    return get_time_units(end - start), population.get_fittest()
+    return end - start, population.get_fittest()
 
 
 def build_and_run(mutation_rate, crossover_rate, population_size, elitism_count, ga_type, chromo_type):
