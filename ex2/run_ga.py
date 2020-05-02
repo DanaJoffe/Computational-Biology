@@ -20,7 +20,7 @@ def get_time_units(time):
 def evaluate(population, gen):
     fittest = population.get_fittest()
     f = fittest.get_fitness()
-    print("gen: {} fit: {} chromo: {}".format(str(gen), f, str(fittest)))
+    # print("gen: {} fit: {} chromo: {}".format(str(gen), f, str(fittest)))
 
 
 def run(ga, population):
@@ -41,7 +41,7 @@ def run(ga, population):
         evaluate(population, gen)
 
     end = timer()
-    return end - start, population.get_fittest()
+    return end - start, population.get_fittest(), gen
 
 
 def build_and_run(mutation_rate, crossover_rate, population_size, elitism_count, ga_type, chromo_type):

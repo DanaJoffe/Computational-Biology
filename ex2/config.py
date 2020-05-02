@@ -1,10 +1,8 @@
-import random
-
 # GA parameters
 POPULATION_SIZE = 100
-ELITISM = 2
-MUTATION_RATE = .01
-CROSSOVER_RATE = .75
+ELITISM = 10
+MUTATION_RATE = .1
+CROSSOVER_RATE = .85
 # tournament_size = None
 
 # paint map problem

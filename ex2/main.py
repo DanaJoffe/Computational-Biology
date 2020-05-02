@@ -91,12 +91,23 @@ def main():
     population_size = POPULATION_SIZE
     elitism_count = ELITISM
 
-    # for i in range(50):
-    time, chromo = build_and_run(mutation_rate, crossover_rate, population_size, elitism_count,
-                                         MapPaintGA, MapPaintChromosome)
-
-    print("run for {} {}".format(*get_time_units(time)))
+    time, chromo, gen = build_and_run(mutation_rate, crossover_rate, population_size, elitism_count,
+                                      MapPaintGA, MapPaintChromosome)
+    print("run for {:.2f} {} and {} generations in average".format(time, "seconds", gen))
     show_mat(chromo.to_matrix())
+
+    # runs = []
+    # gens = []
+    # for i in range(200):
+    #     time, chromo, gen = build_and_run(mutation_rate, crossover_rate, population_size, elitism_count,
+    #                                       MapPaintGA, MapPaintChromosome)
+    #     print("{}. run for {:.2f} {} and {} generations".format(i, time, "seconds", gen))
+    #     runs.append(time)
+    #     gens.append(gen)
+    #
+    # time = sum(runs)/len(runs)
+    # gen = sum(gens)/len(gens)
+    # print("run for {:.2f} {} and {} generations in average".format(time, "seconds", gen))
 
 
 if __name__ == '__main__':
