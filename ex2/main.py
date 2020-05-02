@@ -47,12 +47,10 @@ class MapPaintChromosome(ListChromosomeBase):
 
     def get_num_to_color(self):
         num_to_color = {}
-        num = 1
-        for i in range(0, len(self), 2):
+        for shape_num, i in enumerate(range(0, len(self), 2)):
             g1, g2 = self[i:i + 2]
             color = int(''.join(map(str, [g1, g2])), 2)
-            num_to_color[num] = color
-            num += 1
+            num_to_color[shape_num+1] = color
         return num_to_color
 
     def to_matrix(self):
