@@ -21,6 +21,14 @@ class CrossoverStrategy(ABC):
         raise NotImplemented
 
 
+class TwoParentsOneChild(object):
+    def get_parents_amount(self):
+        return 2
+
+    def get_offsprings_amount(self):
+        return 1
+
+
 class TwoParentsTwoChildren(object):
     def get_parents_amount(self):
         return 2
@@ -29,7 +37,7 @@ class TwoParentsTwoChildren(object):
         return 2
 
 
-class SinglePointCrossover(TwoParentsTwoChildren, CrossoverStrategy):
+class SinglePointCrossover(TwoParentsOneChild, CrossoverStrategy):
     # the class knows Chromosome's representation
     # def get_parents_amount(self):
     #     return 2
@@ -44,11 +52,9 @@ class SinglePointCrossover(TwoParentsTwoChildren, CrossoverStrategy):
         ch1, ch2 = chromosomes
 
         crossover_point = random.randint(0, len(ch1) - 1)
-        offspring1 = ch1.__copy__()
-        offspring2 = ch2.__copy__()
-        offspring1[crossover_point:] = ch2[crossover_point:]
-        offspring2[crossover_point:] = ch1[crossover_point:]
-        return offspring1, offspring2
+        offspring = ch1.__copy__()
+        offspring[crossover_point:] = ch2[crossover_point:]
+        return offspring,
 
 
 class UniformCrossover(TwoParentsTwoChildren, CrossoverStrategy):
