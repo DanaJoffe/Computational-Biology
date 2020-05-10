@@ -5,9 +5,11 @@ from GeneticAlgoAPI.fitness_function import MistakesBasedFitnessFunc
 from GeneticAlgoAPI.genetic_algorithm import GeneticAlgorithm, ApplyElitism
 from GeneticAlgoAPI.mutation_strategy import BinaryMutation
 from GeneticAlgoAPI.selection_strategy import RouletteWheelSelection
-from config import MUTATION_RATE, CROSSOVER_RATE, POPULATION_SIZE, ELITISM
+from config import parameters
 from graphics import show_mat
 from run_ga import build_and_run, get_time_units
+
+MUTATION_RATE, CROSSOVER_RATE, POPULATION_SIZE, ELITISM = parameters.MUTATION_RATE, parameters.CROSSOVER_RATE, parameters.POPULATION_SIZE, parameters.ELITISM
 
 """ Map Paint problem """
 
@@ -89,7 +91,7 @@ def main():
     population_size = POPULATION_SIZE
     elitism_count = ELITISM
 
-    time, chromo, gen = build_and_run(mutation_rate, crossover_rate, population_size, elitism_count,
+    return build_and_run(mutation_rate, crossover_rate, population_size, elitism_count,
                                       MapPaintGA, MapPaintChromosome)
     print("run for {:.2f} {} and {} generations in average".format(time, "seconds", gen))
     show_mat(chromo.to_matrix())

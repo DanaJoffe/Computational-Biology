@@ -30,7 +30,7 @@ def run(ga, population):
     stop_extra_mutate = 0
     ga.set_fitness_scores(population)
     gen = 0
-    evaluate(population, gen)
+    #evaluate(population, gen)
     while not ga.get_stop_cond(population):
         if ga.mutation_rate == 0.2:
             print("20% mutation")
@@ -43,7 +43,7 @@ def run(ga, population):
         population.add_chromosome(elite)
         ga.set_fitness_scores(population)
 
-        evaluate(population, gen)
+        #evaluate(population, gen)
 
         # if early convergence is found - increase mutation rate to 20%
         if population.get_fittest().get_fitness() == population.get_least_fit().get_fitness():

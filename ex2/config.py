@@ -1,11 +1,12 @@
 # GA parameters
-POPULATION_SIZE = 100
-ELITISM = 10
-MUTATION_RATE = .1
-CROSSOVER_RATE = .85
-# tournament_size = None
+class parameters:
+    POPULATION_SIZE = 800
+    ELITISM = 11
+    MUTATION_RATE = .16
+    CROSSOVER_RATE = .59
+    fileName = 'eggs.csv'
+    # tournament_size = None
 
-# paint map problem
 COLOR1 = 0
 COLOR2 = 1
 COLOR3 = 2
