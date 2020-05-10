@@ -1,6 +1,6 @@
 import csv
 
-from main import main
+from main import mainForSimulation as main
 from config import parameters
 
 names = ["crossover","mutation", "elitism","population"]
@@ -149,10 +149,10 @@ def crossover(epochNum):
 
 if __name__ == '__main__':
     # init first args.
-    parameters.POPULATION_SIZE = 120
-    parameters.ELITISM = 3
+    parameters.POPULATION_SIZE = 800
+    parameters.ELITISM = 6
     parameters.MUTATION_RATE = .06
-    parameters.CROSSOVER_RATE = .88
+    parameters.CROSSOVER_RATE = .65
     epochNum = 50
 
     population(epochNum)

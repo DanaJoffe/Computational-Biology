@@ -17,21 +17,30 @@ def get_time_units(time):
     return time, unit
 
 
-def evaluate(population, gen):
+def evaluate(population, gen, time):
     fittest = population.get_fittest()
-    f = fittest.get_fitness()
-    print("gen: {} fit: {} chromo: {}".format(str(gen), f, str(fittest)))
+    worstFittness = population.get_least_fit()
+    avgFittness = population.get_avg()
+    best = fittest.get_fitness()
+    worst = worstFittness.get_fitness()
+    avg = avgFittness
+
+    print("gen {} best {} time {}".format(str(gen), abs(best), str(time)))
+    print("gen {} worst {} time {}".format(str(gen), abs(worst), str(time)))
+    print("gen {} avg {} time {}".format(str(gen), abs(avg), str(time)))
+    print("")
 
 
 def run(ga, population):
-    start = timer()
-
     original_mr = ga.mutation_rate
     stop_extra_mutate = 0
     ga.set_fitness_scores(population)
     gen = 0
-    #evaluate(population, gen)
+
+    start = timer()
     while not ga.get_stop_cond(population):
+        evaluate(population, gen, timer()-start)
+
         if ga.mutation_rate == 0.2:
             print("20% mutation")
 
@@ -43,7 +52,7 @@ def run(ga, population):
         population.add_chromosome(elite)
         ga.set_fitness_scores(population)
 
-        #evaluate(population, gen)
+
 
         # if early convergence is found - increase mutation rate to 20%
         if population.get_fittest().get_fitness() == population.get_least_fit().get_fitness():
@@ -54,8 +63,9 @@ def run(ga, population):
         else:
             ga.mutation_rate = original_mr
 
-    end = timer()
-    return end - start, population.get_fittest(), gen
+    evaluate(population, gen, timer())
+
+    return timer() - start, population.get_fittest(), gen
 
 
 def build_and_run(mutation_rate, crossover_rate, population_size, elitism_count, ga_type, chromo_type):

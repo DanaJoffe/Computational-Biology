@@ -29,6 +29,17 @@ class Population(object):
         fitness = np.array([ch.get_fitness() for ch in self.population])
         return self.population[fitness.argmax()]
 
+    def get_worst(self) -> Chromosome:
+        """ returns the less fittest chromosome """
+        fitness = np.array([ch.get_fitness() for ch in self.population])
+        return self.population[fitness.argmin()]
+
+    def get_avg(self) -> Chromosome:
+        """ returns the avg fittest chromosome """
+        fitness = np.array([ch.get_fitness() for ch in self.population])
+        return fitness.sum()/fitness.__len__()
+
+
     def get_least_fit(self) -> Chromosome:
         """ returns the least fit chromosome """
         fitness = np.array([ch.get_fitness() for ch in self.population])

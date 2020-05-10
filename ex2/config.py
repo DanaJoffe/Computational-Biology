@@ -1,9 +1,9 @@
 # GA parameters
 class parameters:
     POPULATION_SIZE = 800
-    ELITISM = 11
-    MUTATION_RATE = .16
-    CROSSOVER_RATE = .59
+    ELITISM = 6
+    MUTATION_RATE = .06
+    CROSSOVER_RATE = .65
     fileName = 'eggs.csv'
     # tournament_size = None
 

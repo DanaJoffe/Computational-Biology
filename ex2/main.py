@@ -85,7 +85,7 @@ class MapPaintGA(RouletteWheelSelection, SinglePointCrossover, BinaryMutation, A
         return errors
 
 
-def main():
+def mainForSimulation():
     mutation_rate = MUTATION_RATE
     crossover_rate = CROSSOVER_RATE
     population_size = POPULATION_SIZE
@@ -93,8 +93,7 @@ def main():
 
     return build_and_run(mutation_rate, crossover_rate, population_size, elitism_count,
                                       MapPaintGA, MapPaintChromosome)
-    print("run for {:.2f} {} and {} generations in average".format(time, "seconds", gen))
-    show_mat(chromo.to_matrix())
+
 
     # runs = []
     # gens = []
@@ -111,6 +110,16 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+
+    mutation_rate = MUTATION_RATE
+    crossover_rate = CROSSOVER_RATE
+    population_size = POPULATION_SIZE
+    elitism_count = ELITISM
+
+    time, chromo, gen = build_and_run(mutation_rate, crossover_rate, population_size, elitism_count,
+                                      MapPaintGA, MapPaintChromosome)
+    print("run for {:.2f} {} and {} generations in average".format(time, "seconds", gen))
+    show_mat(chromo.to_matrix())
+
 
 
