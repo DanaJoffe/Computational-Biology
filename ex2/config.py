@@ -1,8 +1,8 @@
 # GA parameters
-POPULATION_SIZE = 100
-ELITISM = 10
-MUTATION_RATE = .1
-CROSSOVER_RATE = .85
+POPULATION_SIZE = 800
+ELITISM = 6
+MUTATION_RATE = .06
+CROSSOVER_RATE = .65
 # tournament_size = None
 
 # paint map problem
