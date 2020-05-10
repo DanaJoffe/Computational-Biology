@@ -20,7 +20,7 @@ def get_time_units(time):
 def evaluate(population, gen):
     fittest = population.get_fittest()
     f = fittest.get_fitness()
-    print("gen: {} fit: {} chromo: {}".format(str(gen), f, str(fittest)))
+    print("generation: {}, best fitness: {}, chromosome: {}".format(str(gen+1), f, str(fittest)))
 
 
 def run(ga, population):
@@ -32,9 +32,6 @@ def run(ga, population):
     gen = 0
     evaluate(population, gen)
     while not ga.get_stop_cond(population):
-        if ga.mutation_rate == 0.2:
-            print("20% mutation")
-
         gen += 1
         elite = ga.apply_elitism(population)
         parents = ga.selection(population)
@@ -48,10 +45,9 @@ def run(ga, population):
         # if early convergence is found - increase mutation rate to 20%
         if population.get_fittest().get_fitness() == population.get_least_fit().get_fitness():
             stop_extra_mutate = gen + 5
-            print("-> early convergence")
-        if gen < stop_extra_mutate:
             ga.mutation_rate = 0.2
-        else:
+            print("-> early convergence")
+        if gen >= stop_extra_mutate:
             ga.mutation_rate = original_mr
 
     end = timer()
@@ -62,7 +58,4 @@ def build_and_run(mutation_rate, crossover_rate, population_size, elitism_count,
     ga = ga_type(elitism_count, mutation_rate, crossover_rate, population_size)
     population = Population()
     population.init_population(population_size, chromo_type)
-
     return run(ga, population)
-
-

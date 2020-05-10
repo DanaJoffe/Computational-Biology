@@ -1,6 +1,5 @@
 import random
 from abc import ABC
-
 from GeneticAlgoAPI.chromosome import Chromosome
 
 

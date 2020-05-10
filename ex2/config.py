@@ -3,7 +3,6 @@ POPULATION_SIZE = 800
 ELITISM = 6
 MUTATION_RATE = .06
 CROSSOVER_RATE = .65
-# tournament_size = None
 
 # paint map problem
 COLOR1 = 0

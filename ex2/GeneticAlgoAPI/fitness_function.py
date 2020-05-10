@@ -30,6 +30,3 @@ class MistakesBasedFitnessFunc(FitnessFuncBase):
     def calc_mistakes(self, chromosome):
         """ domain dependant """
         raise NotImplemented
-
-
-

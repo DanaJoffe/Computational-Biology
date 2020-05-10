@@ -7,9 +7,7 @@ from GeneticAlgoAPI.mutation_strategy import BinaryMutation
 from GeneticAlgoAPI.selection_strategy import RouletteWheelSelection
 from config import MUTATION_RATE, CROSSOVER_RATE, POPULATION_SIZE, ELITISM
 from graphics import show_mat
-from run_ga import build_and_run, get_time_units
-
-""" Map Paint problem """
+from run_ga import build_and_run
 
 
 def calc_collisions(board):
@@ -91,24 +89,9 @@ def main():
 
     time, chromo, gen = build_and_run(mutation_rate, crossover_rate, population_size, elitism_count,
                                       MapPaintGA, MapPaintChromosome)
-    print("run for {:.2f} {} and {} generations in average".format(time, "seconds", gen))
+    print("run for {:.2f} {} and {} generations".format(time, "seconds", gen+1))
     show_mat(chromo.to_matrix())
-
-    # runs = []
-    # gens = []
-    # for i in range(200):
-    #     time, chromo, gen = build_and_run(mutation_rate, crossover_rate, population_size, elitism_count,
-    #                                       MapPaintGA, MapPaintChromosome)
-    #     print("{}. run for {:.2f} {} and {} generations".format(i, time, "seconds", gen))
-    #     runs.append(time)
-    #     gens.append(gen)
-    #
-    # time = sum(runs)/len(runs)
-    # gen = sum(gens)/len(gens)
-    # print("run for {:.2f} {} and {} generations in average".format(time, "seconds", gen))
 
 
 if __name__ == '__main__':
     main()
-
-

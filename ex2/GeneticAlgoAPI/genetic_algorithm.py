@@ -17,16 +17,16 @@ class GeneticAlgorithm(SelectionStrategy, CrossoverStrategy, MutationStrategy, F
     population_size = None
     crossover_rate = None
 
-    max_score = -math.inf
+    best_fitness_score = -math.inf
 
     def set_fitness_scores(self, population: Population):
         scores = self.fitness_func(population)
         for chromo, score in scores.items():
             chromo.set_fitness_score(score)
 
-            # track the fittest score
-            if score > self.max_score:
-                self.max_score = score
+            # track the best fittest score
+            if score > self.best_fitness_score:
+                self.best_fitness_score = score
 
     @abstractmethod
     def get_stop_cond(self, population: Population):
@@ -44,7 +44,7 @@ class GeneticAlgorithm(SelectionStrategy, CrossoverStrategy, MutationStrategy, F
         """
         get list of parents to mate, return the new population
 
-        NOTE: when population (size - elitism amount) doesn't divide in (offspring amount) then the remainder
+        NOTE: when expected population size doesn't divide in (offspring amount) then the remainder
          offsprings won't enter the new population.
         """
         new_population = Population()
@@ -80,11 +80,7 @@ class ApplyElitism(object):
 
     def apply_elitism(self, population):
         """
-        return best chromosomes and remove worst chromosomes
-
-        NOTE: changing population
-        :param population:
-        :return:
+        return best chromosomes and remove worst chromosomes from population.
         """
         elite = []
         if self.elitism > 0:
@@ -120,5 +116,3 @@ def positive(fitness_func):
                 output[k] = v + abs_max + 1
         return output
     return inner
-
-
