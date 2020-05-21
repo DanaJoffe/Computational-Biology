@@ -29,23 +29,11 @@ def create_cmap(cell_colors: Mapping[CellState, Color]):
 def show_mat(board):
     fig, ax = plt.subplots()
     cmap, norm = create_cmap(CELL_COLORS)
-    ax.imshow(board, interpolation='nearest')
+    ax.imshow(board, interpolation='nearest', cmap=cmap)
 
     ax.set(xticks=[], yticks=[])
     ax.axis('image')
     plt.show()
-
-
-if __name__ == '__main__':
-    with open("Digits_Ex3.txt", 'r') as f:
-        board = []
-        for row in f:
-            if not row.strip() and board:
-                board = numpy.array(board)
-                show_mat(board)
-                board = []
-            else:
-                board.append([int(n) for n in row.strip()])
 
 
 
