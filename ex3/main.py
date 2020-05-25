@@ -87,7 +87,11 @@ class BinNumMat(Content):
         return self.n
 
     def dist_from(self, other: "BinNumMat"):
-        """ returns the distance between self & other = amount of mismatches"""
+        """
+        returns the distance between self & other = amount of mismatches
+
+        calculates distance by sum squared distances of all features
+        """
         return sum((self.n[i][j] - other.n[i][j]) ** 2 for i in range(self.r) for j in range(self.c))
 
     def approach_other(self, other: "BinNumMat", learn_func):
@@ -159,15 +163,22 @@ class SOM(object):
             l += 1
 
     def test(self):
-        """ for each example get representation coordinates"""
+        """
+        for each example get representation coordinates
+
+        :return the location of example's representations & the grade (sum of distances)
+        """
         cells = self._net.get_cells()
         locations = []
+        grade = 0
         for xi in self._init_examples:
-            indx = np.argmin([c.content.dist_from(xi) for c in cells])
+            distances = [c.content.dist_from(xi) for c in cells]
+            indx = np.argmin(distances)
+            grade += distances[indx]
             cell = cells[indx]
             i, j = self._net.get_cell_location(cell)
             locations.append((i, j))
-        return locations
+        return grade, locations
 
 
     @property
