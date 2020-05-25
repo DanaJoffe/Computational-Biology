@@ -187,6 +187,7 @@ class SOM(object):
             yield self.board
 
     def run_epoch(self):
+        self.epoch += 1
         if self.shuffle:
             random.shuffle(self.x)
         for xi in self.x:
