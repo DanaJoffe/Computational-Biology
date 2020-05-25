@@ -229,7 +229,7 @@ def main():
     layers_affected = 1  # for no layer-limitation put 'math.inf'
     epochs = math.inf
     learning_rate = lambda time: 0.4
-    h_func = lambda layer, time: 0.5 ** layer  # 60%
+    h_func = lambda layer, time: 0.5 ** layer
     calc_amendment_func = lambda layer, lr, h, time: lambda error: lr(time) * h(layer, time) * error
 
     s = SOM(DomainNet(rows, columns), [BinNumMat(e) for e in parse_digits()], BinNumMat)
