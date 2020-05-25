@@ -120,7 +120,7 @@ class SOM(object):
         self.epoch = 0
         self.set_params()
 
-    def set_params(self, learning_rate=None, h_func=None, layers_affected=1, calc_amendment_func=None, epochs=None,
+    def set_params(self, learning_rate=None, h_func=None, layers_affected=1.0, calc_amendment_func=None, epochs=None,
                    shuffle_examples_each_epoch=True):
         self._h = h_func if h_func else lambda layer, time: 0.5 ** layer
         self._lr = learning_rate if learning_rate else lambda time: 0.4
@@ -226,7 +226,7 @@ def main():
 
     # parameters
     rows, columns = 6,6
-    layers_affected = 1
+    layers_affected = 1  # for no layer-limitation put 'math.inf'
     epochs = math.inf
     learning_rate = lambda time: 0.4
     h_func = lambda layer, time: 0.5 ** layer  # 60%
