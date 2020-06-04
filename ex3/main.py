@@ -90,9 +90,9 @@ class BinNumMat(Content):
         """
         returns the distance between self & other = amount of mismatches
 
-        calculates distance by sum squared distances of all features
+        calculates distance by RMS (sqrt on sum squared distances of all features)
         """
-        return sum((self.n[i][j] - other.n[i][j]) ** 2 for i in range(self.r) for j in range(self.c))
+        return math.sqrt(sum((self.n[i][j] - other.n[i][j]) ** 2 for i in range(self.r) for j in range(self.c)))
 
     def approach_other(self, other: "BinNumMat", learn_func):
         for i in range(self.r):
