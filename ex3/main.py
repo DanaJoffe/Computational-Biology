@@ -232,48 +232,29 @@ class MyEnum(Enum):
      num_to_update_layers = 3
      is_shffle = 4
 
-def printToFile(som,parameter, learning_rate, num_to_update_layers,  filName= 'eggs.csv'):
-    epochs = som.epochs
-    is_shffle = som.shuffle
-    num_of_layer_affected = som._layers_affected
-
-    quantization_error, topological_error, locations = som.test()
-
-    with open(filName, 'a', newline='') as csvfile:
-        spamwriter = csv.writer(csvfile)
-
-
-        spamwriter.writerow(['epochs', 'num of layer affected', 'learning rate', 'num to update layers', 'is shffle'])
-        spamwriter.writerow([epochs, num_of_layer_affected, learning_rate, num_to_update_layers, is_shffle])
-        spamwriter.writerow(['rows', 'cols'])
-        spamwriter.writerow([parameter, parameter])
-
-        # elif parameter == MyEnum.epochs:
-        #     spamwriter.writerow(['num of layer affected', 'learning rate', 'num to update layers', 'is shffle'])
-        #     spamwriter.writerow([num_of_layer_affected, learning_rate, num_to_update_layers, is_shffle])
-        #     spamwriter.writerow(['epochs', epochs])
-        #
-        # elif parameter == MyEnum.num_of_layer_affected:
-        #     spamwriter.writerow(['epochs', 'num of layer affected', 'learning rate', 'num to update layers', 'is shffle'])
-        #     spamwriter.writerow([epochs, num_of_layer_affected, learning_rate, num_to_update_layers, is_shffle])
-        #     spamwriter.writerow(['num of layer affected', num_of_layer_affected])
-        #
-        # elif parameter == MyEnum.learning_rate:
-        #     spamwriter.writerow(['learning rate', learning_rate])
-        #
-        # elif parameter == MyEnum.num_to_update_layers:
-        #     spamwriter.writerow(['num to update layers',num_to_update_layers])
-        #
-        # elif parameter == MyEnum.is_shffle:
-        #     spamwriter.writerow(['is shffle',is_shffle])
-
-        spamwriter.writerow(['quantization error', 'topological error'])
-        spamwriter.writerow([quantization_error, topological_error])
-
-        spamwriter.writerow(['locations'])
-        spamwriter.writerow(locations)
-        spamwriter.writerow([])
-   # print(quantization_error, topological_error, locations)
+# def printToFile(som,parameter, learning_rate, num_to_update_layers,  filName= 'eggs.csv'):
+#     epochs = som.epochs
+#     is_shffle = som.shuffle
+#     num_of_layer_affected = som._layers_affected
+#
+#     quantization_error, topological_error, locations = som.test()
+#
+#     with open(filName, 'a', newline='') as csvfile:
+#         spamwriter = csv.writer(csvfile)
+#
+#
+#         spamwriter.writerow(['epochs', 'num of layer affected', 'learning rate', 'num to update layers', 'is shffle'])
+#         spamwriter.writerow([epochs, num_of_layer_affected, learning_rate, num_to_update_layers, is_shffle])
+#         spamwriter.writerow(['rows', 'cols'])
+#         spamwriter.writerow([parameter, parameter])
+#
+#         spamwriter.writerow(['quantization error', 'topological error'])
+#         spamwriter.writerow([quantization_error, topological_error])
+#
+#         spamwriter.writerow(['locations'])
+#         spamwriter.writerow(locations)
+#         spamwriter.writerow([])
+#    # print(quantization_error, topological_error, locations)
 
 def run_som(som):
     """ plot the board every epoch """
@@ -288,9 +269,9 @@ def run_som(som):
             best_mat = copy(som.board)
             best_error = new_error
             best_locations  = copy(locations)
-    # if (is_print_to_file):
+
     #     printToFile(som,parameter, learning_rate, num_to_update_layers, file_name)
-    # if(is_show):
+
     print(best_error, best_locations)
     show_mat(best_mat)
 
