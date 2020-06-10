@@ -289,7 +289,7 @@ def main():
     # parameters
     rows, columns = 6, 6
     layers_affected = 1  # for no layer-limitation put 'math.inf'
-    epochs = 24
+    epochs = 20
     learning_rate = lambda time: 0.2
     h_func = lambda layer, time: 0.3 ** layer
     calc_amendment_func = lambda layer, lr, h, time: lambda error: lr(time) * h(layer, time) * error
