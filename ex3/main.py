@@ -260,7 +260,7 @@ def print_location_of_samples(locations, error = None):
     if error:
         print("The error is:", error)
     for i in range(len(locations)):
-        print("sample", i, "is in location:", locations[i])
+        print("sample", i, "is at location:", locations[i])
 
 
 
@@ -268,7 +268,8 @@ def run_som(som):
     """ plot the board every epoch """
     best_mat = None
     best_error = np.inf
-    best_locations = None
+    best_locations = int
+
     for epoch in range(min(som.epochs, 1000)):
         som.run_epoch()
         quantization_error, topological_error, locations = som.test()
@@ -314,7 +315,6 @@ def main():
     run_som(s)
     #animate_som(s)
 
-        #animate_som(s)
 
 
 if __name__ == '__main__':
