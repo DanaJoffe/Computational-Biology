@@ -256,6 +256,14 @@ class MyEnum(Enum):
 #         spamwriter.writerow([])
 #    # print(quantization_error, topological_error, locations)
 
+def print_location_of_samples(locations, error = None):
+    if error:
+        print("The error is:", error)
+    for i in range(len(locations)):
+        print("sample", i, "is in location:", locations[i])
+
+
+
 def run_som(som):
     """ plot the board every epoch """
     best_mat = None
@@ -272,7 +280,7 @@ def run_som(som):
 
     #     printToFile(som,parameter, learning_rate, num_to_update_layers, file_name)
 
-    print(best_error, best_locations)
+    print_location_of_samples(best_locations, best_error)
     show_mat(best_mat)
 
 
