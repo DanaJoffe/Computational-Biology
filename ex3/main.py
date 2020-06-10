@@ -7,6 +7,8 @@ from SOM_API.content import Content
 from SOM_API.net import GridNet, Net
 from animation import CellAnimation, GUIanimation
 from graphics import show_mat
+import heapq
+import csv
 
 
 def parse_digits():
@@ -156,9 +158,9 @@ class SOM(object):
             if l > self._layers_affected:
                 break
             # get layer closer to xi
-            lf = self._calc_amendment_func(l, lr=self._lr, h=self._h, time=self.epoch)
+            learnFunction = self._calc_amendment_func(l, lr=self._lr, h=self._h, time=self.epoch)
             for cell in layer:
-                cell.content.approach_other(xi, lf)
+                cell.content.approach_other(xi, learnFunction)
             layer = layer.next_layer()
             l += 1
 
@@ -170,15 +172,29 @@ class SOM(object):
         """
         cells = self._net.get_cells()
         locations = []
-        grade = 0
+        quantization_error = 0.0
+        topological_error = 0.0
+
         for xi in self._init_examples:
             distances = [c.content.dist_from(xi) for c in cells]
-            indx = np.argmin(distances)
-            grade += distances[indx]
+
+            smallest, second_smallest = heapq.nsmallest(2, distances)
+            indx = distances.index(smallest)
+            second_index = distances.index(second_smallest)
+
+            quantization_error += distances[indx]
             cell = cells[indx]
             i, j = self._net.get_cell_location(cell)
+
+            second_cell = cells[second_index]
+            second_i, second_j = self._net.get_cell_location(second_cell)
+            topological_error += max(abs(i-second_i), abs(j-second_j))
+
             locations.append((i, j))
-        return grade, locations
+        quantization_error /= len(self._init_examples)
+        topological_error  /= len(self._init_examples)
+
+        return quantization_error, topological_error, locations
 
 
     @property
@@ -208,12 +224,77 @@ class SOM(object):
     def __str__(self):
         return str(self._net)
 
+from enum import Enum
+class MyEnum(Enum):
+     epochs = 0
+     num_of_layer_affected = 1
+     learning_rate = 2
+     num_to_update_layers = 3
+     is_shffle = 4
+
+def printToFile(som,parameter, learning_rate, num_to_update_layers,  filName= 'eggs.csv'):
+    epochs = som.epochs
+    is_shffle = som.shuffle
+    num_of_layer_affected = som._layers_affected
+
+    quantization_error, topological_error, locations = som.test()
+
+    with open(filName, 'a', newline='') as csvfile:
+        spamwriter = csv.writer(csvfile)
+
+
+        spamwriter.writerow(['epochs', 'num of layer affected', 'learning rate', 'num to update layers', 'is shffle'])
+        spamwriter.writerow([epochs, num_of_layer_affected, learning_rate, num_to_update_layers, is_shffle])
+        spamwriter.writerow(['rows', 'cols'])
+        spamwriter.writerow([parameter, parameter])
+
+        # elif parameter == MyEnum.epochs:
+        #     spamwriter.writerow(['num of layer affected', 'learning rate', 'num to update layers', 'is shffle'])
+        #     spamwriter.writerow([num_of_layer_affected, learning_rate, num_to_update_layers, is_shffle])
+        #     spamwriter.writerow(['epochs', epochs])
+        #
+        # elif parameter == MyEnum.num_of_layer_affected:
+        #     spamwriter.writerow(['epochs', 'num of layer affected', 'learning rate', 'num to update layers', 'is shffle'])
+        #     spamwriter.writerow([epochs, num_of_layer_affected, learning_rate, num_to_update_layers, is_shffle])
+        #     spamwriter.writerow(['num of layer affected', num_of_layer_affected])
+        #
+        # elif parameter == MyEnum.learning_rate:
+        #     spamwriter.writerow(['learning rate', learning_rate])
+        #
+        # elif parameter == MyEnum.num_to_update_layers:
+        #     spamwriter.writerow(['num to update layers',num_to_update_layers])
+        #
+        # elif parameter == MyEnum.is_shffle:
+        #     spamwriter.writerow(['is shffle',is_shffle])
+
+        spamwriter.writerow(['quantization error', 'topological error'])
+        spamwriter.writerow([quantization_error, topological_error])
+
+        spamwriter.writerow(['locations'])
+        spamwriter.writerow(locations)
+        spamwriter.writerow([])
+   # print(quantization_error, topological_error, locations)
 
 def run_som(som):
     """ plot the board every epoch """
+    best_mat = None
+    best_error = np.inf
+    best_locations = None
     for epoch in range(min(som.epochs, 1000)):
         som.run_epoch()
-        show_mat(som.board)
+        quantization_error, topological_error, locations = som.test()
+        new_error = 0.8 * quantization_error + 0.2 * topological_error
+        if new_error < best_error:
+            best_mat = copy(som.board)
+            best_error = new_error
+            best_locations  = copy(locations)
+    # if (is_print_to_file):
+    #     printToFile(som,parameter, learning_rate, num_to_update_layers, file_name)
+    # if(is_show):
+    print(best_error, best_locations)
+    show_mat(best_mat)
+
+
 
 
 def animate_som(som):
@@ -225,11 +306,11 @@ def main():
     # todo: change params, try to be time-dependent
 
     # parameters
-    rows, columns = 6,6
+    rows, columns = 6, 6
     layers_affected = 1  # for no layer-limitation put 'math.inf'
-    epochs = math.inf
-    learning_rate = lambda time: 0.4
-    h_func = lambda layer, time: 0.5 ** layer
+    epochs = 24
+    learning_rate = lambda time: 0.2
+    h_func = lambda layer, time: 0.3 ** layer
     calc_amendment_func = lambda layer, lr, h, time: lambda error: lr(time) * h(layer, time) * error
 
     s = SOM(DomainNet(rows, columns), [BinNumMat(e) for e in parse_digits()], BinNumMat)
@@ -241,8 +322,10 @@ def main():
                  epochs=epochs,
                  shuffle_examples_each_epoch=True)
 
-    # run_som(s)
-    animate_som(s)
+    run_som(s)
+    #animate_som(s)
+
+        #animate_som(s)
 
 
 if __name__ == '__main__':
